@@ -1,2 +1,2 @@
-# Neo's Scripts for CS (UCB)
+# Neo's Scripts for CS
 Repo with my CS career scripts.
