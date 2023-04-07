@@ -1,0 +1,11 @@
+num1 = float(input("Introduzca el primer número: "))
+num2 = float(input("Introduzca el segundo número: "))
+
+if num1 == num2:
+    res = num1 * num2
+elif num1 > num2:
+    res = num1 - num2
+else:
+    res = num1 + num2
+
+print("El resultado es:", res)

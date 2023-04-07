@@ -1,0 +1,7 @@
+num1 = int(input("Introduzca el primer numero: "))
+num2 = int(input("Introduzca el segundo numero: "))
+print("La suma de ambos numeros es: ", num1 + num2)
+print("La resta del segundo al primero es: ", num1 - num2)
+print("El producto de ambos es: ", num1 * num2)
+print("El residuo de ambos es: ", num1 % num2)
+print("El incremento de 100 del primer numero es: ", num1 + 100)
