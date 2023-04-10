@@ -12,4 +12,4 @@ while com <= 100:
         com += 1
     sum += x**2
     x = x + 1
-    print(sum)
+    print(x)
