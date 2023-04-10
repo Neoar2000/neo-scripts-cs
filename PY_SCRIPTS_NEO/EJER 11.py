@@ -1,8 +1,8 @@
-f1 = int(input("Introduce el primer factor: "))
-f2 = int(input("Introduce el segundo factor: "))
-sum = 0
+num = int(input("Introduce un número: "))
+fact = 1
 
-for i in range(f2):
-    sum = sum + f1
+while num > 0:
+    fact *= num
+    num -= 1
 
-print("El resultado de la multiplicación es:", sum)
+print(fact)
