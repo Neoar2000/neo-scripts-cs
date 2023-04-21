@@ -1,0 +1,4 @@
+DELETE FROM dbo.Users
+WHERE ID = 3
+
+SELECT * FROM dbo.Users
