@@ -1,8 +1,9 @@
 estudiantes = {}
+n = int(input("Ingrese la cantidad de estudiantes del curso: "))
 
-for i in range (2): 
+for i in range (n): 
     apellidos = input("Ingrese sus dos apellidos separados por un espacio: ")
-    calificacion = input("Ingrese su calificacion: ")
+    calificacion = int(input("Ingrese su calificacion: "))
     estudiantes[apellidos] = calificacion
 
 mayor_nota = max(estudiantes.values())
@@ -21,4 +22,4 @@ promedio = suma / len(estudiantes)
 
 print("El apellido del mejor estudiante es", apellido_mejor_estudiante)
 print("La cantidad de estudiantes que reprobaron es", contador)
-print("El promedio de las notas de los estudiantes es", promedio)
+print("El promedio de las notas del curso es", promedio)
