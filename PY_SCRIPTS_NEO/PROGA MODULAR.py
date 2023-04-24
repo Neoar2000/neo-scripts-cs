@@ -1,4 +1,4 @@
-def suma(a,b):
+def suma(a, b):
     s = a + b
     return s
 
