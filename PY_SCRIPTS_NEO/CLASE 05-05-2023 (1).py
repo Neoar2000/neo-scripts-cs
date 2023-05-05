@@ -4,6 +4,20 @@ def factorial(n):
         producto *= i
     return producto
 
+def potencia(b, e):
+    return b**e
+
 if __name__ == "__main__":
-    n = int(input("Ingrese un numero: "))
-    print("El factorial de", n, "es", factorial(n))
+    x = float(input("Ingrese un numero: "))
+    b = True
+    sen = x
+
+    for i in range (3, 42, 2):
+        termino = potencia(x, i)/factorial(i)
+        if b:
+            sen -= termino
+        else:
+            sen += termino
+        b = not b
+
+    print("El seno de", x, "es:", sen)
