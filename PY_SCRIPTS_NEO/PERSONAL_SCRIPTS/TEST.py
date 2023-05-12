@@ -18,6 +18,6 @@ def test(preguntas):
         answer = input(pregunta.prompt)
         if answer == pregunta.respuesta:
             puntaje += 1
-    print("Respondiste " + str(puntaje) + " de " + str(len(preg_prompt)) + " correctamente.")
+    print("Respondiste", puntaje, "de", len(preg_prompt), "correctamente.")
 
 test(preguntas)
