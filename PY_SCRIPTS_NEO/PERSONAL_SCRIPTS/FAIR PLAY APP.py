@@ -1,3 +1,4 @@
+#Esta es la funcion de login del sistema (Iniciar Sesion)
 usr = input("Introduce el nombre de usuario: ")
 pwd = input("Introduce la contraseña: ")
 
@@ -8,6 +9,7 @@ while usr != "admin" or pwd != "123":
 
 print("\nContraseña correcta. Bienvenido!\n")
 
+#Esta es la funcion de lista interactiva para el sistema (Menu de opciones)
 preguntas = [
     {
         "prompt": "Lista de productos Fair Play\n(1) Zapatillas\n(2) Poleras\n(3) Buzos\n(4) Otros accesorios\n\n(9) Salir del sistema\n\n",
@@ -117,6 +119,7 @@ preguntas = [
     }
 ]
 
+#Esta funcion verifica que la opcion seleccionada sea valida y muestra el resultado de la misma
 def realizar_pregunta(pregunta, historial=None):
     if historial is None:
         historial = []
