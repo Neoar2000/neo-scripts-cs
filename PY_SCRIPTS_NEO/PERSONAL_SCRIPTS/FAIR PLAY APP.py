@@ -1,5 +1,3 @@
-from Preguntas import pregunta
-
 usr = input("Introduce el nombre de usuario: ")
 pwd = input("Introduce la contraseña: ")
 
