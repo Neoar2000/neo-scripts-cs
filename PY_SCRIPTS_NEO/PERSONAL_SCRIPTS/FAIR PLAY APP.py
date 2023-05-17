@@ -132,7 +132,7 @@ def realizar_pregunta(pregunta, historial=None):
         if isinstance(opciones[respuesta], dict):
             if respuesta == "0":
                 if historial:
-                    realizar_pregunta(historial.pop())
+                    realizar_pregunta(historial.pop(), historial)
                 else:
                     print("\nNo hay preguntas anteriores.\n")
                     realizar_pregunta(pregunta)
@@ -143,7 +143,7 @@ def realizar_pregunta(pregunta, historial=None):
             print(opciones[respuesta])
     elif respuesta == "0":
         if historial:
-            realizar_pregunta(historial.pop())
+            realizar_pregunta(historial.pop(), historial)
         else:
             print("\nNo hay preguntas anteriores.\n")
             realizar_pregunta(pregunta)
