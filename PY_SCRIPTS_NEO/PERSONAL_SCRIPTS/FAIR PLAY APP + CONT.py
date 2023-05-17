@@ -1,4 +1,18 @@
 import time
+import sqlite3
+
+conexion = sqlite3.connect('sistema_contable_fp.db')
+cursor = conexion.cursor()
+
+# Crear tabla para almacenar las compras y ganancias
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS compras (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        producto TEXT,
+        precio REAL,
+        ganancia REAL
+    )
+''')
 
 # Esta es la funcion de login del sistema (Iniciar Sesion)
 def login():
@@ -142,10 +156,7 @@ preguntas = [
 
 # Esta funcion verifica que la opcion seleccionada sea valida, muestra el resultado de la misma y calcula las ganancias totales
 def realizar_pregunta(pregunta, historial=None):
-    global ganancias  # Declarar la variable como global
-
-    ganancias = 0  # Variable global para las ganancias totales
-
+    ganancias_totales = 0
     if historial is None:
         historial = []
         
@@ -170,10 +181,18 @@ def realizar_pregunta(pregunta, historial=None):
         else:
             print(opciones[respuesta])
             if respuesta != "0" and respuesta != "9":
-                producto = productos[respuesta]
-                ganancias += producto["precio"]
-                print("Gracias por tu compra de", producto["nombre"])
-                print("Ganancias totales: Bs.", ganancias)
+                producto = productos[respuesta]["nombre"]
+                precio = productos[respuesta]["precio"]
+                ganancia = precio
+                ganancias_totales += ganancia
+
+                # Registrar la compra y ganancia en la base de datos
+                cursor.execute('INSERT INTO compras (producto, precio, ganancia) VALUES (?, ?, ?)', (producto, precio, ganancia))
+                conexion.commit()
+
+                print("Gracias por tu compra de", producto)
+                print("Ganancias totales: Bs.", ganancias_totales)
+
     elif respuesta == "0":
         if historial:
             print("\nRegresando al menu anterior...\n")
@@ -185,6 +204,7 @@ def realizar_pregunta(pregunta, historial=None):
             realizar_pregunta(pregunta)
     elif respuesta == "9":
         print("\nAdios! Vuelva pronto!\n")
+        conexion.close()
         return
     else:
         print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
