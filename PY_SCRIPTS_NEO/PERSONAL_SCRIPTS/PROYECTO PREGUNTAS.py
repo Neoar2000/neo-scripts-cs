@@ -1,4 +1,4 @@
-from PREGUNTAS import pregunta
+from Preguntas import pregunta
 
 preg_prompt = [
 "Cual es la capital de Bolivia?\n(a) La Paz\n(b) Sucre\n(c) Santa Cruz de la Sierra\n\n",

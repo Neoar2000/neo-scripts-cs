@@ -1,4 +1,4 @@
-from PREGUNTAS import pregunta
+from Preguntas import pregunta
 
 preg_prompt = [
 "De que color es el cielo?\n(a) Azul\n(b) Negro\n(c) Rojo\n\n",
