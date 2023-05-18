@@ -13,8 +13,8 @@ cursor.execute('''
         ganancia REAL
     )
 ''')
-
-# Esta es la funcion de login del sistema (Iniciar Sesion)
+               
+#Esta es la funcion de login del sistema (Iniciar Sesion)
 def login():
     print("\nBienvenido a Fair Play!\n")
     usr = input("Introduce el nombre de usuario: ")
@@ -49,25 +49,25 @@ preguntas = [
         "prompt": "Lista de productos Fair Play:\n(1) Zapatillas\n(2) Poleras\n(3) Buzos\n(4) Otros accesorios\n\n(9) Salir del sistema\n\n",
         "opciones": {
             "1": {
-                "prompt": "Has seleccionado Zapatillas. ¿Qué tipo de zapatillas buscas?\n(1) Deportivas\n(2) Casuales\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                "prompt": "\nHas seleccionado Zapatillas. ¿Qué tipo de zapatillas buscas?\n(1) Deportivas\n(2) Casuales\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                 "opciones": {
                     "1": {
-                        "prompt": "Has seleccionado Zapatillas Deportivas. Estas son nuestras opciones:\n(1) Nike (Bs. 699.99)\n(2) Adidas (Bs. 450.00)\n(3) Under Armour (Bs. 500.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Zapatillas Deportivas. Estas son nuestras opciones:\n(1) Nike (Bs. 699.99)\n(2) Adidas (Bs. 450.00)\n(3) Under Armour (Bs. 500.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": {
-                                "prompt": "Has seleccionado Nike (Bs. 699.99). Quieres comprarla?\n(1) Si\n(0) No\n\n",
+                                "prompt": "\nHas seleccionado Nike (Bs. 699.99). Quieres comprarla?\n(1) Si\n(0) No\n\n",
                                 "opciones": {
                                     "1": "\n"
                                 }
                             },
                             "2": {
-                                "prompt": "Has seleccionado Adidas (Bs. 450.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                                "prompt": "\nHas seleccionado Adidas (Bs. 450.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                                 "opciones": {
                                     "1": "\n"
                                 }
                             },
                             "3": {
-                                "prompt": "Has seleccionado Under Armour (Bs. 500.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                                "prompt": "\nHas seleccionado Under Armour (Bs. 500.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                                 "opciones": {
                                     "1": "\n"  
                                 }
@@ -77,16 +77,16 @@ preguntas = [
                 },
             },
                     "2": {
-                        "prompt": "Has seleccionado Zapatillas Casuales. Estas son nuestras opciones:\n(1) Converse (Bs. 480.00)\n(2) Vans (Bs. 420.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Zapatillas Casuales. Estas son nuestras opciones:\n(1) Converse (Bs. 480.00)\n(2) Vans (Bs. 420.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": {
-                                "prompt": "Has seleccionado Converse (Bs. 480.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                                "prompt": "\nHas seleccionado Converse (Bs. 480.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                                 "opciones": {
                                     "1": "\n"
                                 }
                             },
                             "2": {
-                                "prompt": "Has seleccionado Vans (Bs. 420.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                                "prompt": "\nHas seleccionado Vans (Bs. 420.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                                 "opciones": {
                                     "1": "\n"
                                 }
@@ -94,22 +94,22 @@ preguntas = [
                         }
                     },
             "2": {
-                "prompt": "Has seleccionado Poleras. Estas son nuestras opciones:\n(1) Manga corta (Bs. 150.00)\n(2) Manga larga (Bs. 200.00)\n(3) Polera Viviri (Bs. 100.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                "prompt": "\nHas seleccionado Poleras. Estas son nuestras opciones:\n(1) Manga corta (Bs. 150.00)\n(2) Manga larga (Bs. 200.00)\n(3) Polera Viviri (Bs. 100.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                 "opciones": {
                     "1": {
-                        "prompt": "Has seleccionado Polera Manga corta (Bs. 150.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Polera Manga corta (Bs. 150.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n"
                         }
                     },
                     "2": {
-                        "prompt": "Has seleccionado Polera Manga larga (Bs. 200.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Polera Manga larga (Bs. 200.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n"  
                         }
                     },
                     "3": {
-                        "prompt": "Has seleccionado Polera Viviri (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Polera Viviri (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n" 
                         }
@@ -117,16 +117,16 @@ preguntas = [
                 }
             },
             "3": {
-                "prompt": "Has seleccionado Buzos. Estas son nuestras opciones:\n(1) De algodon (Bs. 350.00)\n(2) De tela sintetica (Bs. 300.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                "prompt": "\nHas seleccionado Buzos. Estas son nuestras opciones:\n(1) De algodon (Bs. 350.00)\n(2) De tela sintetica (Bs. 300.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                 "opciones": {
                     "1": {
-                        "prompt": "Has seleccionado Buzo de algodon (Bs. 350.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Buzo de algodon (Bs. 350.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n" 
                         }
                     },
                     "2": {
-                        "prompt": "Has seleccionado Buzo de tela sintetica (Bs. 300.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Buzo de tela sintetica (Bs. 300.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n"
                         }
@@ -134,16 +134,16 @@ preguntas = [
                 }
             },
             "4": {
-                "prompt": "Has seleccionado Otros accesorios. Estas son nuestras opciones:\n(1) Gorras (Bs. 100.00)\n(2) Calcetines (Bs. 50.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
+                "prompt": "\nHas seleccionado Otros accesorios. Estas son nuestras opciones:\n(1) Gorras (Bs. 100.00)\n(2) Calcetines (Bs. 50.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
                 "opciones": {
                     "1": {
-                        "prompt": "Has seleccionado Gorras (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Gorras (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n"
                         }
                     },
                     "2": {
-                        "prompt": "Has seleccionado Calcetines (Bs. 50.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
+                        "prompt": "\nHas seleccionado Calcetines (Bs. 50.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
                         "opciones": {
                             "1": "\n"
                         }
@@ -190,8 +190,8 @@ def realizar_pregunta(pregunta, historial=None):
                 cursor.execute('INSERT INTO compras (producto, precio, ganancia) VALUES (?, ?, ?)', (producto, precio, ganancia))
                 conexion.commit()
 
-                print("Gracias por tu compra de", producto)
-                print("Ganancias totales: Bs.", ganancias_totales)
+                print("Gracias por tu compra de " + producto + ". Vuelve pronto!")
+                print("\nGanancias totales: Bs.", ganancias_totales)
 
     elif respuesta == "0":
         if historial:
