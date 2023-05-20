@@ -1,18 +1,11 @@
-import time
 import sqlite3
 
-conexion = sqlite3.connect('sistema_contable_fp.db')
+# Conectarse a la base de datos o crearla si no existe
+conexion = sqlite3.connect("contabilidad.db")
 cursor = conexion.cursor()
 
-# Crear tabla para almacenar las compras y ganancias
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS compras (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        producto TEXT,
-        precio REAL,
-        ganancia REAL
-    )
-''')
+# Crear la tabla 'ventas' si no existe
+cursor.execute("CREATE TABLE IF NOT EXISTS ventas (producto TEXT, precio REAL)")
                
 #Esta es la funcion de login del sistema (Iniciar Sesion)
 def login():
@@ -45,170 +38,35 @@ productos = {
 
 # Este es el diccionario para la lista interactiva para el sistema (Menu de opciones)
 preguntas = [
-    {
-        "prompt": "Lista de productos Fair Play:\n(1) Zapatillas\n(2) Poleras\n(3) Buzos\n(4) Otros accesorios\n\n(9) Salir del sistema\n\n",
-        "opciones": {
-            "1": {
-                "prompt": "\nHas seleccionado Zapatillas. ¿Qué tipo de zapatillas buscas?\n(1) Deportivas\n(2) Casuales\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                "opciones": {
-                    "1": {
-                        "prompt": "\nHas seleccionado Zapatillas Deportivas. Estas son nuestras opciones:\n(1) Nike (Bs. 699.99)\n(2) Adidas (Bs. 450.00)\n(3) Under Armour (Bs. 500.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": {
-                                "prompt": "\nHas seleccionado Nike (Bs. 699.99). Quieres comprarla?\n(1) Si\n(0) No\n\n",
-                                "opciones": {
-                                    "1": "\n"
-                                }
-                            },
-                            "2": {
-                                "prompt": "\nHas seleccionado Adidas (Bs. 450.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                                "opciones": {
-                                    "1": "\n"
-                                }
-                            },
-                            "3": {
-                                "prompt": "\nHas seleccionado Under Armour (Bs. 500.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                                "opciones": {
-                                    "1": "\n"  
-                                }
-                            },
-                        }
-                    },
-                },
-            },
-                    "2": {
-                        "prompt": "\nHas seleccionado Zapatillas Casuales. Estas son nuestras opciones:\n(1) Converse (Bs. 480.00)\n(2) Vans (Bs. 420.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": {
-                                "prompt": "\nHas seleccionado Converse (Bs. 480.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                                "opciones": {
-                                    "1": "\n"
-                                }
-                            },
-                            "2": {
-                                "prompt": "\nHas seleccionado Vans (Bs. 420.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                                "opciones": {
-                                    "1": "\n"
-                                }
-                            },
-                        }
-                    },
-            "2": {
-                "prompt": "\nHas seleccionado Poleras. Estas son nuestras opciones:\n(1) Manga corta (Bs. 150.00)\n(2) Manga larga (Bs. 200.00)\n(3) Polera Viviri (Bs. 100.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                "opciones": {
-                    "1": {
-                        "prompt": "\nHas seleccionado Polera Manga corta (Bs. 150.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n"
-                        }
-                    },
-                    "2": {
-                        "prompt": "\nHas seleccionado Polera Manga larga (Bs. 200.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n"  
-                        }
-                    },
-                    "3": {
-                        "prompt": "\nHas seleccionado Polera Viviri (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n" 
-                        }
-                    },
-                }
-            },
-            "3": {
-                "prompt": "\nHas seleccionado Buzos. Estas son nuestras opciones:\n(1) De algodon (Bs. 350.00)\n(2) De tela sintetica (Bs. 300.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                "opciones": {
-                    "1": {
-                        "prompt": "\nHas seleccionado Buzo de algodon (Bs. 350.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n" 
-                        }
-                    },
-                    "2": {
-                        "prompt": "\nHas seleccionado Buzo de tela sintetica (Bs. 300.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n"
-                        }
-                    },
-                }
-            },
-            "4": {
-                "prompt": "\nHas seleccionado Otros accesorios. Estas son nuestras opciones:\n(1) Gorras (Bs. 100.00)\n(2) Calcetines (Bs. 50.00)\n\n(0) Retroceder\n(9) Salir del sistema\n\n",
-                "opciones": {
-                    "1": {
-                        "prompt": "\nHas seleccionado Gorras (Bs. 100.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n"
-                        }
-                    },
-                    "2": {
-                        "prompt": "\nHas seleccionado Calcetines (Bs. 50.00). Quieres comprarla?\n(1) Si\n(0) No\n\n(9) Salir del sistema\n\n",
-                        "opciones": {
-                            "1": "\n"
-                        }
-                    },
-                }
-            },
-        }
-    }
+    "Lista de productos Fair Play:\n\n(1) Zapatillas Nike\n(2) Zapatillas Adidas\n(3) Zapatillas Under Armour\n(4) Zapatillas Converse\n(5) Zapatillas Vans\n(6) Polera Manga corta\n(7) Polera Manga larga\n(8) Polera Viviri\n(9) Buzo de algodón\n(10) Buzo de tela sintética\n(11) Gorra\n(12) Calcetines\n"
 ]
 
+for pregunta in preguntas:
+    print(pregunta)
+
 # Esta funcion verifica que la opcion seleccionada sea valida, muestra el resultado de la misma y calcula las ganancias totales
-def realizar_pregunta(pregunta, historial=None):
-    ganancias_totales = 0
-    if historial is None:
-        historial = []
-        
-    prompt = pregunta["prompt"]
-    opciones = pregunta["opciones"]
-    respuesta = input(prompt)
-    
-    if respuesta in opciones:
-        if isinstance(opciones[respuesta], dict):
-            if respuesta == "0":
-                if historial:
-                    print("\nRegresando al menu anterior...\n")
-                    time.sleep(1)
-                    realizar_pregunta(historial.pop(), historial)
-                else:
-                    print("\nNo hay preguntas anteriores.\n")
-                    time.sleep(1)
-                    realizar_pregunta(pregunta)
-            else:
-                historial.append(pregunta)
-                realizar_pregunta(opciones[respuesta], historial)
-        else:
-            print(opciones[respuesta])
-            if respuesta != "0" and respuesta != "9":
-                producto = productos[respuesta]["nombre"]
-                precio = productos[respuesta]["precio"]
-                ganancia = precio
-                ganancias_totales += ganancia
+def procesar_opcion(opcion):
+    producto_seleccionado = productos[opcion]
+    nombre_producto = producto_seleccionado["nombre"]
+    precio_producto = producto_seleccionado["precio"]
+    print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
 
-                # Registrar la compra y ganancia en la base de datos
-                cursor.execute('INSERT INTO compras (producto, precio, ganancia) VALUES (?, ?, ?)', (producto, precio, ganancia))
-                conexion.commit()
+    # Registrar la venta en la base de datos
+    cursor.execute("INSERT INTO ventas VALUES (?, ?)", (nombre_producto, precio_producto))
+    conexion.commit()
 
-                print("Gracias por tu compra de " + producto + ". Vuelve pronto!")
-                print("\nGanancias totales: Bs.", ganancias_totales)
+    # Realizar acciones adicionales si es necesario
 
-    elif respuesta == "0":
-        if historial:
-            print("\nRegresando al menu anterior...\n")
-            time.sleep(1)
-            realizar_pregunta(historial.pop(), historial)
-        else:
-            print("\nNo hay preguntas anteriores.\n")
-            time.sleep(1)
-            realizar_pregunta(pregunta)
-    elif respuesta == "9":
-        print("\nAdios! Vuelva pronto!\n")
-        conexion.close()
-        return
+while True:
+    # Obtén la opción seleccionada por el usuario
+    opcion_seleccionada = input("Ingrese el número de opción deseada: ")
+
+    if opcion_seleccionada in productos:
+        procesar_opcion(opcion_seleccionada)
+        print("\nGracias por su compra, vuelva pronto!\n")
+        break
     else:
-        print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
-        time.sleep(1)
-        realizar_pregunta(pregunta, historial)
+        print("\nOpción inválida. Por favor, selecciona una opción válida del diccionario de productos.\n")
 
-realizar_pregunta(preguntas[0])
+# Cerrar la conexión a la base de datos al finalizar
+conexion.close()
