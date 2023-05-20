@@ -123,7 +123,7 @@ while not inicio_sesion_exitoso:
     elif opcion == "2":
         registrar_usuario()
     elif opcion == "3":
-        print("\nGracias por visitar Fair Play. Hasta pronto!")
+        print("\nGracias por usar el sistema de Fair Play. Hasta pronto!")
         break
     else:
         print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
