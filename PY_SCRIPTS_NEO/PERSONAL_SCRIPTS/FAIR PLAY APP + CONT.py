@@ -115,7 +115,7 @@ while not inicio_sesion_exitoso:
                     print("Gracias por su compra, vuelva pronto!")
                     break
                 else:
-                    print("\nOpción inválida. Por favor, selecciona una opción válida del diccionario de productos.\n")
+                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
 
             # Cerrar la conexión a la base de datos al finalizar
             conexion.close()
