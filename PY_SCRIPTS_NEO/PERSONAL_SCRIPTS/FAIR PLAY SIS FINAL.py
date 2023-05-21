@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 # Conectarse a la base de datos o crearla si no existe
 conexion = sqlite3.connect("contabilidad.db")
@@ -29,6 +30,7 @@ def registrar_usuario():
     else:
         c.execute("INSERT INTO usuarios VALUES (?, ?)", (nombre_usuario, contraseña))
         print("\nUsuario registrado exitosamente.\n")
+        time.sleep(1)
 
     conn.commit()
     conn.close()
@@ -43,14 +45,12 @@ def login():
     # Verificar las credenciales de inicio de sesión en la base de datos
     c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
     if c.fetchone():
-        print("\nContraseña correcta. ¡Bienvenido!\n")
+        print("\n¡Has iniciado sesión correctamente!\n")
         return True
     else:
         print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.\n")
+        time.sleep(1)
         return False
-
-    conn.commit()
-    conn.close()
 
 crear_tabla_usuarios()
 
@@ -68,7 +68,7 @@ while not inicio_sesion_exitoso:
     if opcion == "1":
         if login():
             inicio_sesion_exitoso = True
-            print("¡Has iniciado sesión correctamente!\n")
+            time.sleep(1)
             # Diccionario de productos y precios
             productos = {
                 "1": {"nombre": "Zapatillas Nike", "precio": 699.99},
@@ -87,7 +87,7 @@ while not inicio_sesion_exitoso:
 
             # Este es el diccionario para la lista interactiva para el sistema (Menu de opciones)
             preguntas = [
-                "Lista de productos Fair Play:\n\n(1) Zapatillas Nike\n(2) Zapatillas Adidas\n(3) Zapatillas Under Armour\n(4) Zapatillas Converse\n(5) Zapatillas Vans\n(6) Polera Manga corta\n(7) Polera Manga larga\n(8) Polera Viviri\n(9) Buzo de algodón\n(10) Buzo de tela sintética\n(11) Gorra\n(12) Calcetines\n"
+                "Lista de productos Fair Play:\n\n(1) Zapatillas Nike\n(2) Zapatillas Adidas\n(3) Zapatillas Under Armour\n(4) Zapatillas Converse\n(5) Zapatillas Vans\n(6) Polera Manga corta\n(7) Polera Manga larga\n(8) Polera Viviri\n(9) Buzo de algodón\n(10) Buzo de tela sintética\n(11) Gorra\n(12) Calcetines\n\n(0) Salir del Sistema"
             ]
 
             for pregunta in preguntas:
@@ -95,27 +95,41 @@ while not inicio_sesion_exitoso:
 
             # Esta funcion verifica que la opcion seleccionada sea valida, muestra el resultado de la misma y calcula las ganancias totales
             def procesar_opcion(opcion):
-                producto_seleccionado = productos[opcion]
-                nombre_producto = producto_seleccionado["nombre"]
-                precio_producto = producto_seleccionado["precio"]
-                print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
+                if opcion == "0":
+                    print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                    time.sleep(1)
+                    exit()
+                elif opcion in productos:
+                    producto_seleccionado = productos[opcion]
+                    nombre_producto = producto_seleccionado["nombre"]
+                    precio_producto = producto_seleccionado["precio"]
+                    print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
 
-                # Registrar la venta en la base de datos
-                cursor.execute("INSERT INTO ventas VALUES (?, ?)", (nombre_producto, precio_producto))
-                conexion.commit()
+                    # Registrar la venta en la base de datos
+                    cursor.execute("INSERT INTO ventas VALUES (?, ?)", (nombre_producto, precio_producto))
+                    conexion.commit()
 
-                # Realizar acciones adicionales si es necesario
+                    # Realizar acciones adicionales si es necesario
+                    print("Gracias por su compra, vuelva pronto!\n")
+                    time.sleep(1)
+                else:
+                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
+                    time.sleep(1)
+                    for pregunta in preguntas:
+                        print(pregunta)
 
             while True:
                 # Obtén la opción seleccionada por el usuario
-                opcion_seleccionada = input("Ingrese el número de opción deseada: ")
+                opcion_seleccionada = input("\nIngrese el número de opción deseada: ")
 
-                if opcion_seleccionada in productos:
+                if opcion_seleccionada in productos or opcion_seleccionada == "0":
                     procesar_opcion(opcion_seleccionada)
-                    print("Gracias por su compra, vuelva pronto!")
                     break
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
+                    time.sleep(1)
+                    for pregunta in preguntas:
+                        print(pregunta)
 
             # Cerrar la conexión a la base de datos al finalizar
             conexion.close()
@@ -124,6 +138,8 @@ while not inicio_sesion_exitoso:
         registrar_usuario()
     elif opcion == "3":
         print("\nGracias por usar el sistema de Fair Play. Hasta pronto!")
+        time.sleep(1)
         break
     else:
         print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
+        time.sleep(1)
