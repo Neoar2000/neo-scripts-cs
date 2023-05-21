@@ -8,6 +8,7 @@ cursor = conexion.cursor()
 # Crear la tabla 'ventas' si no existe
 cursor.execute("CREATE TABLE IF NOT EXISTS ventas (producto TEXT, precio REAL)")
 
+# Función para crear la tabla de usuarios si no existe
 def crear_tabla_usuarios():
     conn = sqlite3.connect('usuarios.db')
     c = conn.cursor()
@@ -16,6 +17,7 @@ def crear_tabla_usuarios():
     conn.commit()
     conn.close()
 
+# Función para registrar un nuevo usuario
 def registrar_usuario():
     nombre_usuario = input("\nIntroduce el nombre de usuario: ")
     contraseña = input("\nIntroduce la contraseña: ")
@@ -35,6 +37,7 @@ def registrar_usuario():
     conn.commit()
     conn.close()
 
+# Función para iniciar sesión
 def login():
     usr = input("\nIntroduce el nombre de usuario: ")
     pwd = input("\nIntroduce la contraseña: ")
@@ -93,7 +96,7 @@ while not inicio_sesion_exitoso:
             for pregunta in preguntas:
                 print(pregunta)
 
-            # Esta funcion verifica que la opcion seleccionada sea valida, muestra el resultado de la misma y calcula las ganancias totales
+            # Función para procesar la opción seleccionada por el usuario
             def procesar_opcion(opcion):
                 if opcion == "0":
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
