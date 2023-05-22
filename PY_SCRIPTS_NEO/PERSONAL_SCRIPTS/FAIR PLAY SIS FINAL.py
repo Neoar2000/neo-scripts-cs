@@ -1,5 +1,6 @@
 import sqlite3
 import time
+import getpass
 
 # Conectarse a la base de datos o crearla si no existe
 conexion = sqlite3.connect("contabilidad.db")
@@ -20,6 +21,7 @@ def crear_tabla_usuarios():
 # Función para registrar un nuevo usuario
 def registrar_usuario():
     nombre_usuario = input("\nIntroduce el nombre de usuario: ")
+    time.sleep(1)
     contraseña = input("\nIntroduce la contraseña: ")
 
     conn = sqlite3.connect('usuarios.db')
@@ -28,19 +30,22 @@ def registrar_usuario():
     # Verificar si el usuario ya está registrado
     c.execute("SELECT * FROM usuarios WHERE nombre_usuario=?", (nombre_usuario,))
     if c.fetchone():
-        print("\nEl usuario ya está registrado. Por favor, intenta con otro nombre de usuario.")
+        time.sleep(1)
+        print("\nEl usuario ya está registrado. Por favor, intenta con otro nombre de usuario.\n")
     else:
         c.execute("INSERT INTO usuarios VALUES (?, ?)", (nombre_usuario, contraseña))
-        print("\nUsuario registrado exitosamente.\n")
         time.sleep(1)
+        print("\nUsuario registrado exitosamente.\n")
 
     conn.commit()
     conn.close()
+    time.sleep(1)
 
 # Función para iniciar sesión
 def login():
     usr = input("\nIntroduce el nombre de usuario: ")
-    pwd = input("\nIntroduce la contraseña: ")
+    time.sleep(1)
+    pwd = getpass.getpass("\nIntroduce la contraseña: ")
 
     conn = sqlite3.connect('usuarios.db')
     c = conn.cursor()
@@ -48,9 +53,11 @@ def login():
     # Verificar las credenciales de inicio de sesión en la base de datos
     c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
     if c.fetchone():
+        time.sleep(1)
         print("\n¡Has iniciado sesión correctamente!\n")
         return True
     else:
+        time.sleep(1)
         print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.\n")
         time.sleep(1)
         return False
@@ -69,12 +76,13 @@ while not inicio_sesion_exitoso:
     opcion = input("\nSeleccione una opción: ")
 
     if opcion == "1":
+        time.sleep(1)
         if login():
             inicio_sesion_exitoso = True
             time.sleep(1)
             # Diccionario de productos y precios
             productos = {
-                "1": {"nombre": "Zapatillas Nike", "precio": 699.99},
+                "1": {"nombre": "Zapatillas Nike", "precio": 700.00},
                 "2": {"nombre": "Zapatillas Adidas", "precio": 450.00},
                 "3": {"nombre": "Zapatillas Under Armour", "precio": 500.00},
                 "4": {"nombre": "Zapatillas Converse", "precio": 480.00},
@@ -90,7 +98,7 @@ while not inicio_sesion_exitoso:
 
             # Este es el diccionario para la lista interactiva para el sistema (Menu de opciones)
             preguntas = [
-                "Lista de productos Fair Play:\n\n(1) Zapatillas Nike\n(2) Zapatillas Adidas\n(3) Zapatillas Under Armour\n(4) Zapatillas Converse\n(5) Zapatillas Vans\n(6) Polera Manga corta\n(7) Polera Manga larga\n(8) Polera Viviri\n(9) Buzo de algodón\n(10) Buzo de tela sintética\n(11) Gorra\n(12) Calcetines\n\n(0) Salir del Sistema"
+                "Lista de productos Fair Play:\n\n(1) Zapatillas Nike (Bs. 700.00)\n(2) Zapatillas Adidas (Bs. 450.00)\n(3) Zapatillas Under Armour (Bs. 500.00)\n(4) Zapatillas Converse (Bs. 480.00)\n(5) Zapatillas Vans (Bs. 420.00)\n(6) Polera Manga corta (Bs. 150.00)\n(7) Polera Manga larga (Bs. 200.00)\n(8) Polera Viviri (Bs. 100.00)\n(9) Buzo de algodón (Bs. 350.00)\n(10) Buzo de tela sintética (Bs. 300.00)\n(11) Gorra (Bs. 100.00)\n(12) Calcetines (Bs. 50.00)\n\n(0) Salir del Sistema"
             ]
 
             for pregunta in preguntas:
@@ -113,6 +121,7 @@ while not inicio_sesion_exitoso:
                     conexion.commit()
 
                     # Realizar acciones adicionales si es necesario
+                    time.sleep(1)
                     print("Gracias por su compra, vuelva pronto!\n")
                     time.sleep(1)
                 else:
@@ -123,12 +132,14 @@ while not inicio_sesion_exitoso:
 
             while True:
                 # Obtén la opción seleccionada por el usuario
-                opcion_seleccionada = input("\nIngrese el número de opción deseada: ")
+                opcion_seleccionada = input("\nIngrese el número de opción que desea comprar: ")
 
                 if opcion_seleccionada in productos or opcion_seleccionada == "0":
+                    time.sleep(1)
                     procesar_opcion(opcion_seleccionada)
                     break
                 else:
+                    time.sleep(1)
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
                     for pregunta in preguntas:
@@ -138,11 +149,14 @@ while not inicio_sesion_exitoso:
             conexion.close()
             break
     elif opcion == "2":
+        time.sleep(1)
         registrar_usuario()
     elif opcion == "3":
+        time.sleep(1)
         print("\nGracias por usar el sistema de Fair Play. Hasta pronto!")
         time.sleep(1)
         break
     else:
+        time.sleep(1)
         print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
         time.sleep(1)
