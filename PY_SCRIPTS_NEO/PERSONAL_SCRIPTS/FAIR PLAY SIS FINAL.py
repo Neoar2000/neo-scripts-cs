@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 import time
 import getpass
 
@@ -7,7 +8,7 @@ conexion = sqlite3.connect("contabilidad.db")
 cursor = conexion.cursor()
 
 # Crear la tabla 'ventas' si no existe
-cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE)")
+cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE, hora TEXT)")
 
 # Función para crear la tabla de usuarios si no existe
 def crear_tabla_usuarios():
@@ -100,9 +101,10 @@ while not inicio_sesion_exitoso:
                 "Lista de productos Fair Play:\n\n(1) Zapatillas Nike (Bs. 700.00)\n(2) Zapatillas Adidas (Bs. 450.00)\n(3) Zapatillas Under Armour (Bs. 500.00)\n(4) Zapatillas Converse (Bs. 480.00)\n(5) Zapatillas Vans (Bs. 420.00)\n(6) Polera Manga corta (Bs. 150.00)\n(7) Polera Manga larga (Bs. 200.00)\n(8) Polera Viviri (Bs. 100.00)\n(9) Buzo de algodón (Bs. 350.00)\n(10) Buzo de tela sintética (Bs. 300.00)\n(11) Gorra (Bs. 100.00)\n(12) Calcetines (Bs. 50.00)\n\n(0) Salir del Sistema"
             ]
 
-            def obtener_fecha_actual():
+            def obtener_fecha_y_hora_actual():
                 fecha_actual = time.strftime("%Y-%m-%d")
-                return fecha_actual
+                hora_actual = datetime.now().strftime("%H:%M:%S:%f")
+                return fecha_actual, hora_actual
 
             def mostrar_menu():
                 for pregunta in preguntas:
@@ -118,18 +120,19 @@ while not inicio_sesion_exitoso:
                     producto_seleccionado = productos[opcion]
                     nombre_producto = producto_seleccionado["nombre"]
                     precio_producto = producto_seleccionado["precio"]
-                    fecha_venta = obtener_fecha_actual()
+                    fecha_venta, hora_venta = obtener_fecha_y_hora_actual()
 
                     print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
 
                     # Registrar la venta en la base de datos
-                    cursor.execute("INSERT INTO ventas (producto, precio, fecha) VALUES (?, ?, ?)",
-                                (nombre_producto, precio_producto, fecha_venta))
+                    cursor.execute("INSERT INTO ventas (producto, precio, fecha, hora) VALUES (?, ?, ?, ?)",
+                                (nombre_producto, precio_producto, fecha_venta, hora_venta))
                     conexion.commit()
+
 
                     # Realizar acciones adicionales si es necesario
                     time.sleep(1)
-                    print("Gracias por su compra, vuelva pronto!\n")
+                    print("Compra registrada con exito!\n")
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
@@ -145,7 +148,8 @@ while not inicio_sesion_exitoso:
                     producto = venta[1]
                     precio = venta[2]
                     fecha = venta[3]
-                    print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}")
+                    hora = venta[4]
+                    print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}, Hora: {hora[:-4]}")
                 print("---------------------------\n")
 
             # Main
