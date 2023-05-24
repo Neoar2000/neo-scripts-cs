@@ -7,7 +7,7 @@ conexion = sqlite3.connect("contabilidad.db")
 cursor = conexion.cursor()
 
 # Crear la tabla 'ventas' si no existe
-cursor.execute("CREATE TABLE IF NOT EXISTS ventas (producto TEXT, precio REAL)")
+cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE)")
 
 # Función para crear la tabla de usuarios si no existe
 def crear_tabla_usuarios():
@@ -79,7 +79,6 @@ while not inicio_sesion_exitoso:
         time.sleep(1)
         if login():
             inicio_sesion_exitoso = True
-            time.sleep(1)
             # Diccionario de productos y precios
             productos = {
                 "1": {"nombre": "Zapatillas Nike", "precio": 700.00},
@@ -101,53 +100,81 @@ while not inicio_sesion_exitoso:
                 "Lista de productos Fair Play:\n\n(1) Zapatillas Nike (Bs. 700.00)\n(2) Zapatillas Adidas (Bs. 450.00)\n(3) Zapatillas Under Armour (Bs. 500.00)\n(4) Zapatillas Converse (Bs. 480.00)\n(5) Zapatillas Vans (Bs. 420.00)\n(6) Polera Manga corta (Bs. 150.00)\n(7) Polera Manga larga (Bs. 200.00)\n(8) Polera Viviri (Bs. 100.00)\n(9) Buzo de algodón (Bs. 350.00)\n(10) Buzo de tela sintética (Bs. 300.00)\n(11) Gorra (Bs. 100.00)\n(12) Calcetines (Bs. 50.00)\n\n(0) Salir del Sistema"
             ]
 
-            for pregunta in preguntas:
-                print(pregunta)
+            def obtener_fecha_actual():
+                fecha_actual = time.strftime("%Y-%m-%d")
+                return fecha_actual
 
-            # Función para procesar la opción seleccionada por el usuario
-            def procesar_opcion(opcion):
+            def mostrar_menu():
+                for pregunta in preguntas:
+                    print(pregunta)
+
+            def procesar_venta(opcion):
                 if opcion == "0":
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                    conexion.close()
                     time.sleep(1)
                     exit()
                 elif opcion in productos:
                     producto_seleccionado = productos[opcion]
                     nombre_producto = producto_seleccionado["nombre"]
                     precio_producto = producto_seleccionado["precio"]
+                    fecha_venta = obtener_fecha_actual()
+
                     print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
 
                     # Registrar la venta en la base de datos
-                    cursor.execute("INSERT INTO ventas VALUES (?, ?)", (nombre_producto, precio_producto))
+                    cursor.execute("INSERT INTO ventas (producto, precio, fecha) VALUES (?, ?, ?)",
+                                (nombre_producto, precio_producto, fecha_venta))
                     conexion.commit()
 
                     # Realizar acciones adicionales si es necesario
                     time.sleep(1)
                     print("Gracias por su compra, vuelva pronto!\n")
-                    time.sleep(1)
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
-                    for pregunta in preguntas:
-                        print(pregunta)
 
+            def mostrar_ventas():
+                cursor.execute("SELECT * FROM ventas")
+                ventas = cursor.fetchall()
+
+                print("\nLista de ventas realizadas:")
+                print("---------------------------")
+                for venta in ventas:
+                    venta_id = venta[0]
+                    producto = venta[1]
+                    precio = venta[2]
+                    fecha = venta[3]
+                    print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}")
+                print("---------------------------\n")
+
+            # Main
             while True:
-                # Obtén la opción seleccionada por el usuario
-                opcion_seleccionada = input("\nIngrese el número de opción que desea comprar: ")
+                time.sleep(1)
+                mostrar_menu()
 
-                if opcion_seleccionada in productos or opcion_seleccionada == "0":
+                # Obtén la opción seleccionada por el usuario
+                opcion_seleccionada = input("\nIngrese el número de opción que desea comprar o 'mostrar' para ver las ventas: ")
+
+                if opcion_seleccionada == "mostrar":
                     time.sleep(1)
-                    procesar_opcion(opcion_seleccionada)
-                    break
+                    mostrar_ventas()
+                elif opcion_seleccionada in productos or opcion_seleccionada == "0":
+                    time.sleep(1)
+                    procesar_venta(opcion_seleccionada)
                 else:
                     time.sleep(1)
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
-                    for pregunta in preguntas:
-                        print(pregunta)
 
-            # Cerrar la conexión a la base de datos al finalizar
-            conexion.close()
-            break
+                # Cerrar la conexión a la base de datos al finalizar
+                if opcion_seleccionada == "0":
+                    time.sleep(1)
+                    print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                    conexion.close()
+                    time.sleep(1)
+                    break
+
     elif opcion == "2":
         time.sleep(1)
         registrar_usuario()
