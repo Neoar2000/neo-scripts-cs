@@ -1,14 +1,16 @@
 import sqlite3
-from datetime import datetime
 import time
-import getpass
+import datetime
+
+contador_comprobantes = 1
 
 # Conectarse a la base de datos o crearla si no existe
 conexion = sqlite3.connect("contabilidad.db")
 cursor = conexion.cursor()
 
 # Crear la tabla 'ventas' si no existe
-cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE, hora TEXT)")
+
+#cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE)")
 
 # Función para crear la tabla de usuarios si no existe
 def crear_tabla_usuarios():
@@ -42,26 +44,45 @@ def registrar_usuario():
     conn.close()
     time.sleep(1)
 
+def validar_fecha(fecha):
+    try:
+        dia, mes, anio = map(int, fecha.split('/'))
+        
+        if len(str(anio)) != 4:  # Validar que el año tenga 4 dígitos
+            return False
+        
+        datetime.datetime(anio, mes, dia)
+        return True
+    except ValueError:
+        return False
+
 # Función para iniciar sesión
 def login():
-    usr = input("\nIntroduce el nombre de usuario: ")
-    time.sleep(1)
-    pwd = getpass.getpass("\nIntroduce la contraseña: ")
+    contador_intentos = 0
 
-    conn = sqlite3.connect('usuarios.db')
-    c = conn.cursor()
+    while contador_intentos < 4:
+        usr = input("\nIntroduce el nombre de usuario: ")
+        time.sleep(1)
+        pwd = input("\nIntroduce la contraseña: ")
 
-    # Verificar las credenciales de inicio de sesión en la base de datos
-    c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
-    if c.fetchone():
-        time.sleep(1)
-        print("\n¡Has iniciado sesión correctamente!\n")
-        return True
-    else:
-        time.sleep(1)
-        print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.\n")
-        time.sleep(1)
-        return False
+        conn = sqlite3.connect('usuarios.db')
+        c = conn.cursor()
+
+        # Verificar las credenciales de inicio de sesión en la base de datos
+        c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
+        if c.fetchone():
+            time.sleep(1)
+            print("\n¡Has iniciado sesión correctamente!")
+            return True
+        else:
+            contador_intentos += 1
+            time.sleep(1)
+            print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.")
+            time.sleep(1)
+
+    print("\nUsuario bloqueado por exceso de intentos repetidos.\n")
+    exit()
+
 
 crear_tabla_usuarios()
 
@@ -80,77 +101,243 @@ while not inicio_sesion_exitoso:
         time.sleep(1)
         if login():
             inicio_sesion_exitoso = True
+            fecha_valida = False
+            while not fecha_valida:
+                time.sleep(1)
+                fecha = input("\nIntroduce la fecha (dd/mm/yyyy): ")
+                if validar_fecha(fecha):
+                    fecha_valida = True
+                    fecha_guardada = fecha
+                else:
+                    time.sleep(1)
+                    print("\nFecha incorrecta. Intente nuevamente.")
+
             # Diccionario de productos y precios
             productos = {
-                "1": {"nombre": "Zapatillas Nike", "precio": 700.00},
-                "2": {"nombre": "Zapatillas Adidas", "precio": 450.00},
-                "3": {"nombre": "Zapatillas Under Armour", "precio": 500.00},
-                "4": {"nombre": "Zapatillas Converse", "precio": 480.00},
-                "5": {"nombre": "Zapatillas Vans", "precio": 420.00},
-                "6": {"nombre": "Polera Manga corta", "precio": 150.00},
-                "7": {"nombre": "Polera Manga larga", "precio": 200.00},
-                "8": {"nombre": "Polera Viviri", "precio": 100.00},
-                "9": {"nombre": "Buzo de algodón", "precio": 350.00},
-                "10": {"nombre": "Buzo de tela sintética", "precio": 300.00},
-                "11": {"nombre": "Gorra", "precio": 100.00},
-                "12": {"nombre": "Calcetines", "precio": 50.00}
+                "1": {"nombre": "Puma Polera Active", "precio": 150.00},
+                "2": {"nombre": "Polera Nike NP", "precio": 270.00},
+                "3": {"nombre": "UA Polera PJT Rock", "precio": 250.00},
+                "4": {"nombre": "Zapatilla Deportiva Reebok", "precio": 550.00},
+                "5": {"nombre": "Zapatilla Deportiva Puma RBD Game", "precio": 450.00},
+                "6": {"nombre": "Sandalia Adidas ZAP Adissage", "precio": 300.00},
+                "7": {"nombre": "Sandalia ZAP Adilette Aqua", "precio": 330.00}
             }
 
             # Este es el diccionario para la lista interactiva para el sistema (Menu de opciones)
             preguntas = [
-                "Lista de productos Fair Play:\n\n(1) Zapatillas Nike (Bs. 700.00)\n(2) Zapatillas Adidas (Bs. 450.00)\n(3) Zapatillas Under Armour (Bs. 500.00)\n(4) Zapatillas Converse (Bs. 480.00)\n(5) Zapatillas Vans (Bs. 420.00)\n(6) Polera Manga corta (Bs. 150.00)\n(7) Polera Manga larga (Bs. 200.00)\n(8) Polera Viviri (Bs. 100.00)\n(9) Buzo de algodón (Bs. 350.00)\n(10) Buzo de tela sintética (Bs. 300.00)\n(11) Gorra (Bs. 100.00)\n(12) Calcetines (Bs. 50.00)\n\n(0) Salir del Sistema"
+                "\nLISTA DE PRODUCTOS A LA VENTA:\n",
             ]
 
-            def obtener_fecha_y_hora_actual():
-                fecha_actual = time.strftime("%Y-%m-%d")
-                hora_actual = datetime.now().strftime("%H:%M:%S:%f")
-                return fecha_actual, hora_actual
+            for clave, producto in productos.items():
+                nombre = producto["nombre"]
+                precio = producto["precio"]
+                pregunta = f"({clave}) {nombre} (Bs. {precio:.2f})"
+                preguntas.append(pregunta)
 
+            preguntas.append("\n(*) Salir del Sistema")
+
+            #Funcion para mostrar el menu
             def mostrar_menu():
                 for pregunta in preguntas:
                     print(pregunta)
 
+            #Funcion para procesar la venta
             def procesar_venta(opcion):
-                if opcion == "0":
+                global contador_comprobantes
+                if opcion == "*":
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
                     conexion.close()
                     time.sleep(1)
                     exit()
                 elif opcion in productos:
-                    producto_seleccionado = productos[opcion]
-                    nombre_producto = producto_seleccionado["nombre"]
-                    precio_producto = producto_seleccionado["precio"]
-                    fecha_venta, hora_venta = obtener_fecha_y_hora_actual()
+                    productos_seleccionados = []
+                    continuar_seleccionando = True
+                    
+                    total_compra = 0
+                
+                    while continuar_seleccionando:
+                        producto_seleccionado = productos[opcion]
+                        producto_seleccionado["opcion"] = opcion
+                        nombre_producto = producto_seleccionado["nombre"]
+                        precio_producto = producto_seleccionado["precio"]
+                        fecha_venta = fecha_guardada
 
-                    print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
+                        print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
+                        productos_seleccionados.append(producto_seleccionado)
+
+                        # Solicitar la cantidad de unidades y calcular el total de la compra
+                        for producto_seleccionado in productos_seleccionados:
+                            if producto_seleccionado["opcion"] == opcion:
+                                precio_producto = producto_seleccionado["precio"]
+                                cantidad_valida = False
+                                while not cantidad_valida:
+                                    try:
+                                        cantidad_producto = int(input(f"Ingrese la cantidad de unidades que desea comprar de {producto_seleccionado['nombre']}: "))
+                                        if cantidad_producto >= 1 and cantidad_producto <= 5:
+                                            cantidad_valida = True
+                                            time.sleep(1)
+                                        else:
+                                            print("Cantidad no válida. Por favor, ingrese una cantidad entre 1 y 5.")
+                                            time.sleep(1)
+                                    except ValueError:
+                                        print("Entrada no válida. Por favor, ingrese un número entero.")
+                                        time.sleep(1)
+
+                                producto_seleccionado["cantidad"] = cantidad_producto
+                                total_producto = precio_producto * cantidad_producto
+                                total_compra += total_producto
+
+                        # Funcion para preguntar al usuario si desea continuar seleccionando productos
+                        opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
+                        while opcion_continuar.lower() != "s" and opcion_continuar.lower() != "n":
+                            print("Opción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
+                            opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
+
+                        if opcion_continuar.lower() != "s":
+                            continuar_seleccionando = False
+                        else:
+                            # Mostrar nuevamente la lista de productos
+                            time.sleep(1)
+                            print("\nLISTA DE PRODUCTOS A LA VENTA:\n")
+                            for clave, producto in productos.items():
+                                nombre = producto["nombre"]
+                                precio = producto["precio"]
+                                pregunta = f"({clave}) {nombre} (Bs. {precio:.2f})"
+                                print(pregunta)
+
+                            # Obtén la opción seleccionada por el usuario
+                            opcion = input("\nIngrese el número de opción que desea comprar: ")
 
                     # Registrar la venta en la base de datos
-                    cursor.execute("INSERT INTO ventas (producto, precio, fecha, hora) VALUES (?, ?, ?, ?)",
-                                (nombre_producto, precio_producto, fecha_venta, hora_venta))
-                    conexion.commit()
-
+                    #for producto_seleccionado in productos_seleccionados:
+                        #nombre_producto = producto_seleccionado["nombre"]
+                        #precio_producto = producto_seleccionado["precio"]
+                        #cursor.execute("INSERT INTO ventas (producto, precio, fecha) VALUES (?, ?, ?)",
+                                    #(nombre_producto, precio_producto, fecha_venta))
+                    
+                    #conexion.commit()
 
                     # Realizar acciones adicionales si es necesario
                     time.sleep(1)
-                    print("Compra registrada con exito!\n")
+                    print("\nCompra registrada con exito!\n")
+                    time.sleep(1)
+                    print(f"Total de la compra: Bs. {total_compra:.2f}\n")
+                    time.sleep(1)
+
+                    # Continuar con el siguiente paso (solicitud de NIT/CI)
+                    nit_ci_valido = False
+                    while not nit_ci_valido:
+                        nit_ci = input("Ingrese su NIT/CI (solo números, guion y las letras EGD), o ingrese 0 si no tiene NIT: ")
+                        if nit_ci == "0":
+                            nit_ci_valido = True
+                        elif len(nit_ci) <= 10 and all(char.isdigit() or char in "-EGD" for char in nit_ci):
+                            nit_ci_valido = True
+                        else:
+                            print("El formato del NIT/CI no cumple con los requisitos, por favor revise sus datos.")
+
+                    print("\nNIT/CI válido: ", nit_ci)
+                    time.sleep(1)
+
+                    # Solicitar nombre del beneficiario si no ingresó 0 en el NIT/CI
+                    if nit_ci == "0":
+                        beneficiario = "S/N"
+                    else:
+                        nombre_valido = False
+                        while not nombre_valido:
+                            beneficiario = input("Ingrese el nombre del beneficiario (solo letras): ")
+
+
+                            if beneficiario.isalpha() and len(beneficiario) <= 50:
+                                nombre_valido = True
+                                time.sleep(1)
+                            else:
+                                print("El nombre del beneficiario no cumple con los requisitos. Por favor, ingrese solo letras y no más de 50 caracteres.")
+                                time.sleep(1)
+
+                    print("\nNombre del beneficiario: ", beneficiario)
+                    time.sleep(1)
+
+
+                    # Solicitar método de pago (tarjeta o efectivo)
+                    metodo_pago_valido = False
+                    while not metodo_pago_valido:
+                            metodo_pago = input("\nSeleccione el método de pago (tarjeta/efectivo): ")
+                            if metodo_pago.lower() == "tarjeta" or metodo_pago.lower() == "efectivo":
+                                metodo_pago_valido = True
+                            else:
+                                print("Opción no válida. Por favor, ingrese 'tarjeta' o 'efectivo'.")
+
+                    if metodo_pago.lower() == "efectivo":
+                        time.sleep(1)
+                        monto_pagado_valido = False
+                        while not monto_pagado_valido:
+                            monto_pagado = float(input("Ingrese el monto pagado por el cliente: "))
+                            time.sleep(1)
+                            if monto_pagado >= total_compra:
+                                monto_pagado_valido = True
+                                cambio = monto_pagado - total_compra
+                                print("Cambio a entregar al cliente:", cambio)
+                                time.sleep(1)
+                            else:
+                                print("Monto no válido. El monto pagado debe ser igual o mayor al total de la compra.")
+                                time.sleep(1)
+                    elif metodo_pago.lower() == "tarjeta":
+                        time.sleep(1)
+                        monto_pagado_valido = False
+                        while not monto_pagado_valido:
+                            monto_pagado = float(input("Ingrese el monto pagado por el cliente: "))
+                            time.sleep(1)
+                            if monto_pagado >= total_compra:
+                                monto_pagado_valido = True
+                            else:
+                                print("Monto no válido. El monto pagado debe ser igual o mayor al total de la compra.")
+                                time.sleep(1)
+
+                        # Generar comprobante
+                        print("\nGenerando comprobante...")
+                        time.sleep(1)
+                        print("\n---------------------------------------------------------")
+                        print("                        FAIR PLAY")
+                        print("                 Comprobante de Ingresos")
+                        print("----------------------------------------------------------")
+                        print("Fecha:", fecha_venta, "                                CDI-000" + str(contador_comprobantes))
+                        print("----------------------------------------------------------")
+                        print("Codigo           Detalle                Debe        Haber")
+                        print("----------------------------------------------------------")
+                        print("11101            Caja                  ", total_compra, "     ")
+                        print("21102            Debito Fiscal         ", "           ", total_compra * 0.13)
+                        print("51101            Ventas                ", "           ", total_compra * 0.87)
+                        print("----------------------------------------------------------")
+                        print("                                       ", total_compra, "     ", total_compra)
+                        print("\n----------------------------------------------------------")
+                        print("Glosa: Por la venta de:\n")
+                        for producto in productos_seleccionados:
+                            cantidad = producto["cantidad"]
+                            nombre = producto["nombre"]
+                            print("       -", cantidad, "unidades de", nombre)
+                        print("\nal NIT/CI", nit_ci, "a nombre de", beneficiario)
+                        print("----------------------------------------------------------")
+
+                        contador_comprobantes += 1
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
 
-            def mostrar_ventas():
-                cursor.execute("SELECT * FROM ventas")
-                ventas = cursor.fetchall()
+            # def mostrar_ventas():
+#                 cursor.execute("SELECT * FROM ventas")
+#                 ventas = cursor.fetchall()
+#
+#                 print("\nLista de ventas realizadas:")
+#                 print("---------------------------")
+#                 for venta in ventas:
+#                     venta_id = venta[0]
+#                     producto = venta[1]
+#                     precio = venta[2]
+#                     fecha = venta[3]
+#                     hora = venta[4]
+#                     print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}, Hora: {hora[:-4]}")
+#                 print("---------------------------\n")
 
-                print("\nLista de ventas realizadas:")
-                print("---------------------------")
-                for venta in ventas:
-                    venta_id = venta[0]
-                    producto = venta[1]
-                    precio = venta[2]
-                    fecha = venta[3]
-                    hora = venta[4]
-                    print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}, Hora: {hora[:-4]}")
-                print("---------------------------\n")
 
             # Main
             while True:
@@ -158,12 +345,12 @@ while not inicio_sesion_exitoso:
                 mostrar_menu()
 
                 # Obtén la opción seleccionada por el usuario
-                opcion_seleccionada = input("\nIngrese el número de opción que desea comprar o 'mostrar' para ver las ventas: ")
+                opcion_seleccionada = input("\nIngrese el número de opción que desea comprar: ")
 
-                if opcion_seleccionada == "mostrar":
-                    time.sleep(1)
-                    mostrar_ventas()
-                elif opcion_seleccionada in productos or opcion_seleccionada == "0":
+                #if opcion_seleccionada == "mostrar":
+                    #time.sleep(1)
+                    #mostrar_ventas()
+                if opcion_seleccionada in productos or opcion_seleccionada == "*":
                     time.sleep(1)
                     procesar_venta(opcion_seleccionada)
                 else:
@@ -172,7 +359,7 @@ while not inicio_sesion_exitoso:
                     time.sleep(1)
 
                 # Cerrar la conexión a la base de datos al finalizar
-                if opcion_seleccionada == "0":
+                if opcion_seleccionada == "*":
                     time.sleep(1)
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
                     conexion.close()
