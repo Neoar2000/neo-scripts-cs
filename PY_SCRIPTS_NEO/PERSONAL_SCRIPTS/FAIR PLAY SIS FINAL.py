@@ -4,14 +4,6 @@ import datetime
 
 contador_comprobantes = 1
 
-# Conectarse a la base de datos o crearla si no existe
-conexion = sqlite3.connect("contabilidad.db")
-cursor = conexion.cursor()
-
-# Crear la tabla 'ventas' si no existe
-
-#cursor.execute("CREATE TABLE IF NOT EXISTS ventas (id INTEGER PRIMARY KEY AUTOINCREMENT, producto TEXT, precio REAL, fecha DATE)")
-
 # Función para crear la tabla de usuarios si no existe
 def crear_tabla_usuarios():
     conn = sqlite3.connect('usuarios.db')
@@ -149,7 +141,6 @@ while not inicio_sesion_exitoso:
                 global contador_comprobantes
                 if opcion == "*":
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
-                    conexion.close()
                     time.sleep(1)
                     exit()
                 elif opcion in productos:
@@ -209,7 +200,6 @@ while not inicio_sesion_exitoso:
                                 if opcion == "*":
                                     opcion_valida = True
                                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
-                                    conexion.close()
                                     time.sleep(1)
                                     exit()
                                 else:
@@ -225,15 +215,6 @@ while not inicio_sesion_exitoso:
                             if opcion != "*":
                                 # Continuar con el siguiente producto seleccionado
                                 continue
-
-                    # Registrar la venta en la base de datos
-                    #for producto_seleccionado in productos_seleccionados:
-                        #nombre_producto = producto_seleccionado["nombre"]
-                        #precio_producto = producto_seleccionado["precio"]
-                        #cursor.execute("INSERT INTO ventas (producto, precio, fecha) VALUES (?, ?, ?)",
-                                    #(nombre_producto, precio_producto, fecha_venta))
-                    
-                    #conexion.commit()
 
                     # Registrar la venta en el sistema
                     time.sleep(1)
@@ -380,21 +361,6 @@ while not inicio_sesion_exitoso:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
 
-            # def mostrar_ventas():
-#                 cursor.execute("SELECT * FROM ventas")
-#                 ventas = cursor.fetchall()
-#
-#                 print("\nLista de ventas realizadas:")
-#                 print("---------------------------")
-#                 for venta in ventas:
-#                     venta_id = venta[0]
-#                     producto = venta[1]
-#                     precio = venta[2]
-#                     fecha = venta[3]
-#                     hora = venta[4]
-#                     print(f"ID: {venta_id}, Producto: {producto}, Precio: Bs. {precio}, Fecha: {fecha}, Hora: {hora[:-4]}")
-#                 print("---------------------------\n")
-
             # Main
             while True:
                 time.sleep(1)
@@ -403,9 +369,6 @@ while not inicio_sesion_exitoso:
                 # Obtén la opción seleccionada por el usuario
                 opcion_seleccionada = input("\nIngrese el número de opción que desea comprar: ")
 
-                #if opcion_seleccionada == "mostrar":
-                    #time.sleep(1)
-                    #mostrar_ventas()
                 if opcion_seleccionada in productos or opcion_seleccionada == "*":
                     time.sleep(1)
                     procesar_venta(opcion_seleccionada)
@@ -417,7 +380,6 @@ while not inicio_sesion_exitoso:
                 if opcion_seleccionada == "*":
                     time.sleep(1)
                     print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
-                    conexion.close()
                     time.sleep(1)
                     break
 
