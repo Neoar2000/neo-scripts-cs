@@ -44,18 +44,6 @@ def registrar_usuario():
     conn.close()
     time.sleep(1)
 
-def validar_fecha(fecha):
-    try:
-        dia, mes, anio = map(int, fecha.split('/'))
-        
-        if len(str(anio)) != 4:  # Validar que el año tenga 4 dígitos
-            return False
-        
-        datetime.datetime(anio, mes, dia)
-        return True
-    except ValueError:
-        return False
-
 # Función para iniciar sesión
 def login():
     contador_intentos = 0
@@ -83,6 +71,17 @@ def login():
     print("\nUsuario BLOQUEADO por exceso de intentos repetidos.\n")
     exit()
 
+def validar_fecha(fecha):
+    try:
+        dia, mes, anio = map(int, fecha.split('/'))
+        
+        if len(str(anio)) != 4 or str(anio).startswith('0'):
+            return False
+        
+        datetime.datetime(anio, mes, dia)
+        return True
+    except ValueError:
+        return False
 
 crear_tabla_usuarios()
 
@@ -107,7 +106,11 @@ while not inicio_sesion_exitoso:
                 fecha = input("\nIntroduce la fecha (dd/mm/yyyy): ")
                 if validar_fecha(fecha):
                     fecha_valida = True
-                    fecha_guardada = fecha
+                    fecha_guardada = fecha[:6] + str(int(fecha[6:]))
+                    time.sleep(1)
+                    print("\n¡Fecha validada con éxito!")
+                    time.sleep(1)
+                    print("\nFecha registrada:", fecha_guardada)
                 else:
                     time.sleep(1)
                     print("\nFecha incorrecta. Intente nuevamente.")
@@ -165,34 +168,32 @@ while not inicio_sesion_exitoso:
                         print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
                         productos_seleccionados.append(producto_seleccionado)
 
-                        # Solicitar la cantidad de unidades
-                        for producto_seleccionado in productos_seleccionados:
-                            if producto_seleccionado["opcion"] == opcion:
-                                precio_producto = producto_seleccionado["precio"]
-                                cantidad_valida = False
-                                while not cantidad_valida:
-                                    try:
-                                        time.sleep(1)
-                                        cantidad_producto = input(f"Ingrese la cantidad de unidades que desea comprar de {nombre_producto} (debe ser entre 1 y 5): ").strip()
-                                        time.sleep(1)
-                                        if len(cantidad_producto) == 1 and cantidad_producto.isdigit() and int(cantidad_producto) >= 1 and int(cantidad_producto) <= 5:
-                                            cantidad_valida = True
-                                        else:
-                                            print("\nCantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
-                                    except ValueError:
-                                        time.sleep(1)
-                                        print("\nEntrada no válida. Por favor, ingrese un número entero.\n")
+                        # Solicitar la cantidad de unidades del último producto seleccionado
+                        cantidad_valida = False
+                        while not cantidad_valida:
+                            try:
+                                time.sleep(1)
+                                cantidad_producto = input(f"Ingrese la cantidad de unidades que desea comprar de {nombre_producto} (debe ser entre 1 y 5): ").strip()
+                                time.sleep(1)
+                                if len(cantidad_producto) == 1 and cantidad_producto.isdigit() and int(cantidad_producto) >= 1 and int(cantidad_producto) <= 5:
+                                    cantidad_valida = True
+                                else:
+                                    print("\nCantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
+                            except ValueError:
+                                time.sleep(1)
+                                print("\nEntrada no válida. Por favor, ingrese un número entero.\n")
 
-                                cantidad_producto = int(cantidad_producto)
-                                producto_seleccionado["cantidad"] = cantidad_producto
-                                total_producto = precio_producto * cantidad_producto
-                                total_compra += total_producto
+                        cantidad_producto = int(cantidad_producto)
+                        producto_seleccionado["cantidad"] = cantidad_producto
+                        total_producto = precio_producto * cantidad_producto
+                        total_compra += total_producto
 
-                        
                         # Función para preguntar si se desea agregar más productos
                         opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
                         while opcion_continuar.lower() != "s" and opcion_continuar.lower() != "n":
-                            print("Opción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
+                            time.sleep(1)
+                            print("\nOpción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
+                            time.sleep(1)
                             opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
 
                         if opcion_continuar.lower() != "s":
@@ -217,39 +218,13 @@ while not inicio_sesion_exitoso:
                                         if opcion >= 1 and opcion <= len(productos):
                                             opcion_valida = True
                                         else:
-                                            print("\nOpción no válida. Por favor, seleccione una opción válida.")
+                                            print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
                                     except ValueError:
-                                        print("\nOpción no válida. Por favor, ingrese un número válido.")
+                                        print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
 
                             if opcion != "*":
-                                producto_seleccionado = productos[str(opcion)]
-                                producto_seleccionado["opcion"] = str(opcion)
-                                nombre_producto = producto_seleccionado["nombre"]
-                                precio_producto = producto_seleccionado["precio"]
-                                fecha_venta = fecha_guardada
-
-                                print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
-                                productos_seleccionados.append(producto_seleccionado)
-                            
-                                # Solicitar la cantidad de unidades y calcular el total de la compra
-                                cantidad_valida = False
-                                while not cantidad_valida:
-                                    try:
-                                        time.sleep(1)
-                                        cantidad_producto = input(f"Ingrese la cantidad de unidades que desea comprar de {nombre_producto} (debe ser entre 1 y 5): ").strip()
-                                        time.sleep(1)
-                                        if len(cantidad_producto) == 1 and cantidad_producto.isdigit() and int(cantidad_producto) >= 1 and int(cantidad_producto) <= 5:
-                                            cantidad_valida = True
-                                        else:
-                                            print("\nCantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
-                                    except ValueError:
-                                        time.sleep(1)
-                                        print("\nEntrada no válida. Por favor, ingrese un número entero.\n")
-
-                                cantidad_producto = int(cantidad_producto)
-                                producto_seleccionado["cantidad"] = cantidad_producto
-                                total_producto = precio_producto * cantidad_producto
-                                total_compra += total_producto
+                                # Continuar con el siguiente producto seleccionado
+                                continue
 
                     # Registrar la venta en la base de datos
                     #for producto_seleccionado in productos_seleccionados:
@@ -338,7 +313,7 @@ while not inicio_sesion_exitoso:
                         print("                        FAIR PLAY")
                         print("                 Comprobante de Ingresos")
                         print("----------------------------------------------------------")
-                        print("Fecha:", fecha_venta, "                                CDI-000" + str(contador_comprobantes))
+                        print("Fecha:", fecha_venta, "                               CDI-000" + str(contador_comprobantes))
                         print("----------------------------------------------------------")
                         print("Codigo           Detalle                Debe        Haber")
                         print("----------------------------------------------------------")
@@ -357,6 +332,7 @@ while not inicio_sesion_exitoso:
                         print("----------------------------------------------------------")
 
                         contador_comprobantes += 1
+                        time.sleep(1)
 
                     elif metodo_pago.lower() == "tarjeta":
                         monto_pagado_valido = False
@@ -380,7 +356,7 @@ while not inicio_sesion_exitoso:
                         print("                        FAIR PLAY")
                         print("                 Comprobante de Ingresos")
                         print("----------------------------------------------------------")
-                        print("Fecha:", fecha_venta, "                                CDI-000" + str(contador_comprobantes))
+                        print("Fecha:", fecha_venta, "                               CDI-000" + str(contador_comprobantes))
                         print("----------------------------------------------------------")
                         print("Codigo           Detalle                Debe        Haber")
                         print("----------------------------------------------------------")
@@ -399,6 +375,7 @@ while not inicio_sesion_exitoso:
                         print("----------------------------------------------------------")
 
                         contador_comprobantes += 1
+                        time.sleep(1)
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
                     time.sleep(1)
@@ -434,7 +411,7 @@ while not inicio_sesion_exitoso:
                     procesar_venta(opcion_seleccionada)
                 else:
                     time.sleep(1)
-                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
+                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
 
                 # Cerrar la conexión a la base de datos al finalizar
                 if opcion_seleccionada == "*":
