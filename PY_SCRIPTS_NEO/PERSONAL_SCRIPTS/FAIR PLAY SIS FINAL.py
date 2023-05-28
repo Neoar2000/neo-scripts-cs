@@ -70,6 +70,9 @@ def validar_fecha(fecha):
         if len(str(anio)) != 4 or str(anio).startswith('0'):
             return False
         
+        if ' ' in fecha:
+            return False
+        
         datetime.datetime(anio, mes, dia)
         return True
     except ValueError:
@@ -82,10 +85,10 @@ inicio_sesion_exitoso = False
 
 # Menú principal
 while not inicio_sesion_exitoso:
-    print("Bienvenido a Fair Play!\n")
-    print("1. Iniciar sesión")
-    print("2. Registrarse")
-    print("3. Salir")
+    print("Bienvenido al Sistema de Ventas de Fair Play!\n")
+    print("(1) Iniciar sesión")
+    print("(2) Registrarse")
+    print("(3) Salir del Sistema")
     opcion = input("\nSeleccione una opción: ")
 
     if opcion == "1":
@@ -140,7 +143,7 @@ while not inicio_sesion_exitoso:
             def procesar_venta(opcion):
                 global contador_comprobantes
                 if opcion == "*":
-                    print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
                     time.sleep(1)
                     exit()
                 elif opcion in productos:
@@ -199,7 +202,7 @@ while not inicio_sesion_exitoso:
                                 time.sleep(1)
                                 if opcion == "*":
                                     opcion_valida = True
-                                    print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
                                     time.sleep(1)
                                     exit()
                                 else:
@@ -299,6 +302,7 @@ while not inicio_sesion_exitoso:
                         print("Codigo           Detalle                Debe        Haber")
                         print("----------------------------------------------------------")
                         print("11101            Caja                  ", total_compra, "     ")
+                        print("11201            Bancos                ")
                         print("21102            Debito Fiscal         ", "           ", total_compra * 0.13)
                         print("51101            Ventas                ", "           ", total_compra * 0.87)
                         print("----------------------------------------------------------")
@@ -341,6 +345,7 @@ while not inicio_sesion_exitoso:
                         print("----------------------------------------------------------")
                         print("Codigo           Detalle                Debe        Haber")
                         print("----------------------------------------------------------")
+                        print("11101            Caja                  ")
                         print("11201            Bancos                ", total_compra, "     ")
                         print("21102            Debito Fiscal         ", "           ", total_compra * 0.13)
                         print("51101            Ventas                ", "           ", total_compra * 0.87)
@@ -379,7 +384,7 @@ while not inicio_sesion_exitoso:
                 # Cerrar la conexión a la base de datos al finalizar
                 if opcion_seleccionada == "*":
                     time.sleep(1)
-                    print("\nGracias por usar el sistema de Fair Play. Hasta pronto!\n")
+                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
                     time.sleep(1)
                     break
 
@@ -388,7 +393,7 @@ while not inicio_sesion_exitoso:
         registrar_usuario()
     elif opcion == "3":
         time.sleep(1)
-        print("\nGracias por usar el sistema de Fair Play. Hasta pronto!")
+        print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!")
         time.sleep(1)
         break
     else:
