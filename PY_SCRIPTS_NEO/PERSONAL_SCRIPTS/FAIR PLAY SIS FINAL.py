@@ -2,6 +2,7 @@ import sqlite3
 import time
 import datetime
 
+# Variable para el contador de comprobantes
 contador_comprobantes = 1
 
 # Función para crear la tabla de usuarios si no existe
@@ -67,6 +68,7 @@ def login():
     print("\nUsuario BLOQUEADO por exceso de intentos repetidos.\n")
     exit()
 
+# Función para validar la fecha ingresada
 def validar_fecha(fecha):
     try:
         dia, mes, anio = map(int, fecha.split('/'))
@@ -125,7 +127,7 @@ while not inicio_sesion_exitoso:
                 "7": {"nombre": "Sandalia ZAP Adilette Aqua", "precio": 330.00}
             }
 
-            # Este es el diccionario para la lista interactiva para el sistema (Menu de opciones)
+            # Esta es la lista interactiva para el sistema (Menu de opciones)
             preguntas = [
                 "\nLISTA DE PRODUCTOS A LA VENTA:\n",
             ]
@@ -155,7 +157,7 @@ while not inicio_sesion_exitoso:
                     continuar_seleccionando = True
                     
                     total_compra = 0
-                
+                    # Continuar seleccionando productos hasta que el usuario lo indique
                     while continuar_seleccionando:
                         producto_seleccionado = productos[str(opcion)]
                         producto_seleccionado["opcion"] = str(opcion)
@@ -234,7 +236,7 @@ while not inicio_sesion_exitoso:
                     while not nit_ci_valido:
                         time.sleep(1)
                         nit_ci = input("Ingrese su NIT/CI (solo números, guion y las letras EGD), o ingrese 0 si no tiene NIT: ")
-                        nit_ci = nit_ci.strip()  # Eliminar espacios en blanco al inicio y al final
+                        nit_ci = nit_ci.strip()
                         time.sleep(1)
 
                         if nit_ci == "0":
@@ -378,6 +380,7 @@ while not inicio_sesion_exitoso:
                 # Obtén la opción seleccionada por el usuario
                 opcion_seleccionada = input("\nIngrese el número de opción que desea comprar: ")
 
+                # Verificar si la opción seleccionada es válida
                 if opcion_seleccionada in productos or opcion_seleccionada == "*":
                     time.sleep(1)
                     procesar_venta(opcion_seleccionada)
