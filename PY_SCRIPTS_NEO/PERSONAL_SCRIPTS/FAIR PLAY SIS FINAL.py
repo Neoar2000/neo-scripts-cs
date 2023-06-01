@@ -188,6 +188,9 @@ while not inicio_sesion_exitoso:
                         total_producto = precio_producto * cantidad_producto
                         total_compra += total_producto
 
+                        print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
+                        time.sleep(1)
+
                         # Función para preguntar si se desea agregar más productos
                         opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
                         while opcion_continuar.lower() != "s" and opcion_continuar.lower() != "n":
@@ -228,8 +231,6 @@ while not inicio_sesion_exitoso:
                     # Registrar la venta en el sistema
                     time.sleep(1)
                     print("\nCompra registrada con exito!\n")
-                    time.sleep(1)
-                    print(f"Total de la compra: Bs. {total_compra:.2f}\n")
 
                     # Continuar con el siguiente paso (solicitud de NIT/CI)
                     nit_ci_valido = False
