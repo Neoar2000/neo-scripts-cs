@@ -21,7 +21,7 @@ def crear_tabla_usuarios():
 # Función para registrar un nuevo usuario
 def registrar_usuario():
     nombre_usuario = input("\nIntroduce el nombre de usuario: ")
-    time.sleep(1)
+    
     contraseña = input("\nIntroduce la contraseña: ")
 
     conn = sqlite3.connect('usuarios.db')
@@ -30,16 +30,16 @@ def registrar_usuario():
     # Verificar si el usuario ya está registrado
     c.execute("SELECT * FROM usuarios WHERE nombre_usuario=?", (nombre_usuario,))
     if c.fetchone():
-        time.sleep(1)
+        
         print("\nEl usuario ya está registrado. Por favor, intenta con otro nombre de usuario.\n")
     else:
         c.execute("INSERT INTO usuarios VALUES (?, ?)", (nombre_usuario, contraseña))
-        time.sleep(1)
+        
         print("\nUsuario registrado exitosamente.\n")
 
     conn.commit()
     conn.close()
-    time.sleep(1)
+    
 
 # Función para iniciar sesión
 def login():
@@ -47,7 +47,7 @@ def login():
 
     while contador_intentos < 4:
         usr = input("\nIntroduce el nombre de usuario: ")
-        time.sleep(1)
+        
         pwd = input("\nIntroduce la contraseña: ")
 
         conn = sqlite3.connect('usuarios.db')
@@ -56,14 +56,15 @@ def login():
         # Verificar las credenciales de inicio de sesión en la base de datos
         c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
         if c.fetchone():
-            time.sleep(1)
+            
             print("\n¡Has iniciado sesión correctamente!")
             return True
         else:
             contador_intentos += 1
-            time.sleep(1)
-            print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.")
-            time.sleep(1)
+            
+            if contador_intentos < 4:
+                print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.")
+                
 
     print("\nUsuario BLOQUEADO por exceso de intentos repetidos.\n")
     exit()
@@ -98,22 +99,22 @@ while not inicio_sesion_exitoso:
     opcion = input("\nSeleccione una opción: ")
 
     if opcion == "1":
-        time.sleep(1)
+        
         if login():
             inicio_sesion_exitoso = True
             fecha_valida = False
             while not fecha_valida:
-                time.sleep(1)
+                
                 fecha = input("\nIntroduce la fecha (dd/mm/yyyy): ")
                 if validar_fecha(fecha):
                     fecha_valida = True
                     fecha_guardada = fecha[:6] + str(int(fecha[6:]))
-                    time.sleep(1)
+                    
                     print("\n¡Fecha validada con éxito!")
-                    time.sleep(1)
+                    
                     print("\nFecha registrada:", fecha_guardada)
                 else:
-                    time.sleep(1)
+                    
                     print("\nFecha incorrecta. Intente nuevamente.")
 
             # Diccionario de productos y precios
@@ -150,7 +151,7 @@ while not inicio_sesion_exitoso:
                 global contador_comprobantes
                 if opcion == "*":
                     print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
-                    time.sleep(1)
+                    
                     exit()
                 elif opcion in productos:
                     productos_seleccionados = []
@@ -172,15 +173,15 @@ while not inicio_sesion_exitoso:
                         cantidad_valida = False
                         while not cantidad_valida:
                             try:
-                                time.sleep(1)
+                                
                                 cantidad_producto = input(f"Ingrese la cantidad de unidades que desea comprar de {nombre_producto} (debe ser entre 1 y 5): ").strip()
-                                time.sleep(1)
+                                
                                 if len(cantidad_producto) == 1 and cantidad_producto.isdigit() and int(cantidad_producto) >= 1 and int(cantidad_producto) <= 5:
                                     cantidad_valida = True
                                 else:
                                     print("\nCantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
                             except ValueError:
-                                time.sleep(1)
+                                
                                 print("\nEntrada no válida. Por favor, ingrese un número entero.\n")
 
                         cantidad_producto = int(cantidad_producto)
@@ -189,14 +190,14 @@ while not inicio_sesion_exitoso:
                         total_compra += total_producto
 
                         print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
-                        time.sleep(1)
+                        
 
                         # Función para preguntar si se desea agregar más productos
                         opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
                         while opcion_continuar.lower() != "s" and opcion_continuar.lower() != "n":
-                            time.sleep(1)
+                            
                             print("\nOpción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
-                            time.sleep(1)
+                            
                             opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
 
                         if opcion_continuar.lower() != "s":
@@ -205,14 +206,14 @@ while not inicio_sesion_exitoso:
                             # Obtén la opción seleccionada por el usuario
                             opcion_valida = False
                             while not opcion_valida:
-                                time.sleep(1)
+                                
                                 mostrar_menu()
                                 opcion = input("\nIngrese el número de opción que desea comprar: ")
-                                time.sleep(1)
+                                
                                 if opcion == "*":
                                     opcion_valida = True
                                     print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
-                                    time.sleep(1)
+                                    
                                     exit()
                                 else:
                                     try:
@@ -229,16 +230,16 @@ while not inicio_sesion_exitoso:
                                 continue
 
                     # Registrar la venta en el sistema
-                    time.sleep(1)
+                    
                     print("\nCompra registrada con exito!\n")
 
                     # Continuar con el siguiente paso (solicitud de NIT/CI)
                     nit_ci_valido = False
                     while not nit_ci_valido:
-                        time.sleep(1)
+                        
                         nit_ci = input("Ingrese su NIT/CI (solo números, guion y las letras EGD), o ingrese 0 si no tiene NIT: ")
                         nit_ci = nit_ci.strip()
-                        time.sleep(1)
+                        
 
                         if nit_ci == "0":
                             nit_ci_valido = True
@@ -250,20 +251,20 @@ while not inicio_sesion_exitoso:
                     print("\nNIT/CI válido:", nit_ci)
 
                     # Solicitar nombre del beneficiario si no ingresó 0 en el NIT/CI
-                    time.sleep(1)
+                    
                     if nit_ci == "0":
                         beneficiario = "S/N"
                     else:
                         nombre_valido = False
                         while not nombre_valido:
                             beneficiario = input("\nIngrese el nombre del beneficiario (solo letras): ")
-                            time.sleep(1)
+                            
 
                             if beneficiario.isalpha() and len(beneficiario) <= 50:
                                 nombre_valido = True
                             else:
                                 print("\nEl nombre del beneficiario no cumple con los requisitos. Por favor, ingrese solo letras y no más de 50 caracteres.")
-                                time.sleep(1)
+                                
 
                     print("\nNombre del beneficiario: ", beneficiario)
 
@@ -271,21 +272,21 @@ while not inicio_sesion_exitoso:
                     # Solicitar método de pago (tarjeta o efectivo)
                     metodo_pago_valido = False
                     while not metodo_pago_valido:
-                            time.sleep(1)
-                            metodo_pago = input("\nSeleccione el método de pago (tarjeta/efectivo): ")
-                            if metodo_pago.lower() == "tarjeta" or metodo_pago.lower() == "efectivo":
+                            
+                            metodo_pago = input("\nSeleccione el método de pago (Ponga 't' para tarjeta o 'e' para efectivo): ")
+                            if metodo_pago.lower() == "t" or metodo_pago.lower() == "e":
                                 metodo_pago_valido = True
                             else:
-                                time.sleep(1)
-                                print("\nOpción no válida. Por favor, ingrese 'tarjeta' o 'efectivo'.")
+                                
+                                print("\nOpción no válida. Por favor, ingrese 't' para tarjeta o 'e' para efectivo.")
 
-                    if metodo_pago.lower() == "efectivo":
+                    if metodo_pago.lower() == "e":
                         monto_pagado_valido = False
                         while not monto_pagado_valido:
-                            time.sleep(1)
+                            
                             try:
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
-                                time.sleep(1)
+                                
                                 if monto_pagado >= total_compra:
                                     monto_pagado_valido = True
                                     cambio = monto_pagado - total_compra
@@ -293,11 +294,11 @@ while not inicio_sesion_exitoso:
                                 else:
                                     print("\nMonto no válido. El monto pagado debe ser igual o mayor al total de la compra.")
                             except ValueError:
-                                time.sleep(1)
+                                
                                 print("\nEntrada no válida. Por favor, ingrese un número válido.")
 
                         # Generar comprobante
-                        time.sleep(1)
+                        
                         print("\nGenerando comprobante...")
                         time.sleep(1)
                         print("\n---------------------------------------------------------")
@@ -324,21 +325,21 @@ while not inicio_sesion_exitoso:
                         print("----------------------------------------------------------")
 
                         contador_comprobantes += 1
-                        time.sleep(1)
+                        
 
-                    elif metodo_pago.lower() == "tarjeta":
+                    elif metodo_pago.lower() == "t":
                         monto_pagado_valido = False
                         while not monto_pagado_valido:
-                            time.sleep(1)
+                            
                             try:
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
-                                time.sleep(1)
+                                
                                 if monto_pagado == total_compra:
                                     monto_pagado_valido = True
                                 else:
                                     print("\nMonto no válido. El monto pagado debe ser igual al total de la compra.")
                             except ValueError:
-                                time.sleep(1)
+                                
                                 print("\nEntrada no válida. Por favor, ingrese un número válido.")
 
                         # Generar comprobante
@@ -368,14 +369,15 @@ while not inicio_sesion_exitoso:
                         print("----------------------------------------------------------")
 
                         contador_comprobantes += 1
-                        time.sleep(1)
+                        
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
-                    time.sleep(1)
+
+                input("\n\nPresione ENTER para registrar otra compra...")
 
             # Main
             while True:
-                time.sleep(1)
+                
                 mostrar_menu()
 
                 # Obtén la opción seleccionada por el usuario
@@ -383,28 +385,28 @@ while not inicio_sesion_exitoso:
 
                 # Verificar si la opción seleccionada es válida
                 if opcion_seleccionada in productos or opcion_seleccionada == "*":
-                    time.sleep(1)
+                    
                     procesar_venta(opcion_seleccionada)
                 else:
-                    time.sleep(1)
+                    
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
 
                 # Cerrar la conexión a la base de datos al finalizar
                 if opcion_seleccionada == "*":
-                    time.sleep(1)
+                    
                     print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
-                    time.sleep(1)
+                    
                     break
 
     elif opcion == "2":
-        time.sleep(1)
+        
         registrar_usuario()
     elif opcion == "3":
-        time.sleep(1)
+        
         print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!")
-        time.sleep(1)
+        
         break
     else:
-        time.sleep(1)
+        
         print("\nOpción inválida. Por favor, selecciona una opción válida.\n")
-        time.sleep(1)
+        
