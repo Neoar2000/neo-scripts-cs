@@ -13,7 +13,7 @@ def crear_tabla_usuarios():
                  (nombre_usuario TEXT PRIMARY KEY, contraseña TEXT)''')
     
     # Crear usuario "admin" con contraseña "12345"
-    c.execute("INSERT OR IGNORE INTO usuarios (nombre_usuario, contraseña) VALUES (?, ?)", ("admin", "12345"))
+    c.execute("INSERT OR IGNORE INTO usuarios (nombre_usuario, contraseña) VALUES (?, ?)", ("ADMIN", "12345"))
 
     conn.commit()
     conn.close()
