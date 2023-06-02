@@ -45,7 +45,7 @@ def registrar_usuario():
 def login():
     contador_intentos = 0
 
-    while contador_intentos < 4:
+    while contador_intentos < 3:
         usr = input("\nIntroduce el nombre de usuario: ")
         
         pwd = input("\nIntroduce la contraseña: ")
@@ -62,7 +62,7 @@ def login():
         else:
             contador_intentos += 1
             
-            if contador_intentos < 4:
+            if contador_intentos < 3:
                 print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.")
                 
 
