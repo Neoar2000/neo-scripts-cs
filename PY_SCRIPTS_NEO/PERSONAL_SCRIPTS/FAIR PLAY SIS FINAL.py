@@ -289,7 +289,7 @@ while not inicio_sesion_exitoso:
                                 if monto_pagado >= total_compra:
                                     monto_pagado_valido = True
                                     cambio = monto_pagado - total_compra
-                                    print("\nCambio a entregar al cliente:", cambio, "\n")
+                                    print("\nCambio a entregar al cliente:", cambio)
                                 else:
                                     print("\nMonto no válido. El monto pagado debe ser igual o mayor al total de la compra.")
                             except ValueError:
