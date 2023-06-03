@@ -285,6 +285,7 @@ while not inicio_sesion_exitoso:
                         while not monto_pagado_valido:
                             
                             try:
+                                print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
                                 if monto_pagado >= total_compra:
@@ -332,6 +333,7 @@ while not inicio_sesion_exitoso:
                         while not monto_pagado_valido:
                             
                             try:
+                                print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
                                 if monto_pagado == total_compra:
@@ -373,7 +375,7 @@ while not inicio_sesion_exitoso:
                 else:
                     print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
 
-                input("\n\nPresione ENTER para registrar otra compra...")
+                input("\n\nPresione ENTER para registrar otra compra...\n")
 
             # Main
             while True:
