@@ -285,6 +285,7 @@ while not inicio_sesion_exitoso:
                         while not monto_pagado_valido:
                             
                             try:
+                                
                                 print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
@@ -333,6 +334,7 @@ while not inicio_sesion_exitoso:
                         while not monto_pagado_valido:
                             
                             try:
+                                
                                 print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
