@@ -92,6 +92,7 @@ inicio_sesion_exitoso = False
 
 # Menú principal
 while not inicio_sesion_exitoso:
+
     print("Bienvenido al Sistema de Ventas de Fair Play!\n")
     print("(1) Iniciar sesión")
     print("(2) Registrarse")
@@ -99,12 +100,12 @@ while not inicio_sesion_exitoso:
     opcion = input("\nSeleccione una opción: ")
 
     if opcion == "1":
-        
+
         if login():
             inicio_sesion_exitoso = True
             fecha_valida = False
             while not fecha_valida:
-                
+
                 fecha = input("\nIntroduce la fecha (dd/mm/yyyy): ")
                 if validar_fecha(fecha):
                     fecha_valida = True
@@ -233,17 +234,15 @@ while not inicio_sesion_exitoso:
                     
                     print("\nCompra registrada con exito!\n")
 
-                    # Continuar con el siguiente paso (solicitud de NIT/CI)
+                   # Continuar con el siguiente paso (solicitud de NIT/CI)
                     nit_ci_valido = False
                     while not nit_ci_valido:
-                        
                         nit_ci = input("Ingrese su NIT/CI (solo números, guion y las letras EGD), o ingrese 0 si no tiene NIT: ")
                         nit_ci = nit_ci.strip()
-                        
 
                         if nit_ci == "0":
                             nit_ci_valido = True
-                        elif len(nit_ci) > 0 and len(nit_ci) <= 10 and all(char.isdigit() or char in "-EGD" for char in nit_ci):
+                        elif len(nit_ci) > 0 and len(nit_ci.replace("-", "")) > 1 and len(nit_ci.replace("-", "")) <= 10 and all(char.isdigit() or char in "-EGD" for char in nit_ci):
                             nit_ci_valido = True
                         else:
                             print("\nEl formato del NIT/CI no cumple con los requisitos, por favor revise sus datos.\n")
