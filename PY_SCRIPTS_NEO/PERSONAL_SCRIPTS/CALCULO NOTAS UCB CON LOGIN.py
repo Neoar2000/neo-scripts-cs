@@ -1,12 +1,13 @@
 import os
 
 os.system('cls' if os.name == 'nt' else 'clear')
+print("Bienvenido al sistema de cálculo de notas de la UCB!\n")
 def login():
     intentos = 0
     while intentos < 3:
         usr = input("Ingrese su usuario: ")
         pwd = input("\nIngrese su contraseña: ")
-        if usr == "admin" and pwd == "12345":
+        if usr == "ADMIN" and pwd == "12345":
             return True
         else:
             intentos += 1
