@@ -14,4 +14,4 @@ while True:
         print("Los números ingresados no son múltiplos de 7 consecutivos en orden ascendente. Intente nuevamente.")
 
 print("¡Has ingresado tres múltiplos de 7 consecutivos en orden ascendente!")
-print("Los números ingresados son:", num1, num2, num3)
+print("Los números ingresados son:", num1, num2, "y", num3)
