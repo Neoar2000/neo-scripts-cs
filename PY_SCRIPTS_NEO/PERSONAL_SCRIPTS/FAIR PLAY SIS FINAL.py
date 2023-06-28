@@ -47,7 +47,7 @@ def login():
     contador_intentos = 0
 
     while contador_intentos < 3:
-        usr = input("\nIntroduce el nombre de usuario: ")
+        usr = input("Introduce el nombre de usuario: ")
         
         pwd = input("\nIntroduce la contraseña: ")
 
@@ -58,17 +58,17 @@ def login():
         c.execute("SELECT * FROM usuarios WHERE nombre_usuario=? AND contraseña=?", (usr, pwd))
         if c.fetchone():
             os.system('cls' if os.name == 'nt' else 'clear')
-            print("\n¡Has iniciado sesión correctamente!")
+            print("¡Has iniciado sesión correctamente!")
             return True
         else:
             contador_intentos += 1
             
             if contador_intentos < 3:
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print("\nUsuario y/o contraseña incorrecta. Intente nuevamente.")
+                print("Usuario y/o contraseña incorrecta. Intente nuevamente.\n")
                 
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("\nUsuario BLOQUEADO por exceso de intentos repetidos.\n")
+    print("Usuario BLOQUEADO por exceso de intentos repetidos.\n")
     exit()
 
 # Función para validar la fecha ingresada
@@ -120,7 +120,7 @@ while not inicio_sesion_exitoso:
                     print("\nFecha registrada:", fecha_guardada)
                 else:
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nFecha incorrecta. Intente nuevamente.")
+                    print("Fecha incorrecta. Intente nuevamente.")
 
             # Diccionario de productos y precios
             productos = {
@@ -156,7 +156,7 @@ while not inicio_sesion_exitoso:
                 global contador_comprobantes
                 if opcion == "*":
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
+                    print("Gracias por usar el sistema de ventas de Fair Play. Hasta pronto!")
                     
                     exit()
                 elif opcion in productos:
@@ -173,7 +173,7 @@ while not inicio_sesion_exitoso:
                         fecha_venta = fecha_guardada
 
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        print(f"\nHas seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
+                        print(f"Has seleccionado: {nombre_producto} - Precio: Bs. {precio_producto}\n")
                         productos_seleccionados.append(producto_seleccionado)
 
                         # Solicitar la cantidad de unidades del último producto seleccionado
@@ -187,7 +187,7 @@ while not inicio_sesion_exitoso:
                                     cantidad_valida = True
                                 else:
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("\nCantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
+                                    print("Cantidad no válida. Por favor, ingrese una cantidad entre 1 y 5 (sin ceros adicionales).\n")
                             except ValueError:
                                 os.system('cls' if os.name == 'nt' else 'clear')
                                 print("\nEntrada no válida. Por favor, ingrese un número entero.\n")
@@ -198,14 +198,14 @@ while not inicio_sesion_exitoso:
                         total_compra += total_producto
 
                         os.system('cls' if os.name == 'nt' else 'clear')
-                        print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
+                        print(f"Total de la compra: Bs. {total_compra:.2f}\n")
                         
 
                         # Función para preguntar si se desea agregar más productos
-                        opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
+                        opcion_continuar = input("¿Desea añadir más productos? (s/n): ")
                         while opcion_continuar.lower() != "s" and opcion_continuar.lower() != "n":
                             os.system('cls' if os.name == 'nt' else 'clear')
-                            print("\nOpción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
+                            print("Opción no válida. Por favor, ingrese 's' para sí o 'n' para no.")
                             
                             opcion_continuar = input("\n¿Desea añadir más productos? (s/n): ")
 
@@ -223,7 +223,7 @@ while not inicio_sesion_exitoso:
                                 if opcion == "*":
                                     opcion_valida = True
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
+                                    print("Gracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
                                     
                                     exit()
                                 else:
@@ -232,9 +232,9 @@ while not inicio_sesion_exitoso:
                                         if opcion >= 1 and opcion <= len(productos):
                                             opcion_valida = True
                                         else:
-                                            print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
+                                            print("Opción inválida. Por favor, selecciona una opción válida de la lista de productos.")
                                     except ValueError:
-                                        print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
+                                        print("Opción inválida. Por favor, selecciona una opción válida de la lista de productos.")
 
                             if opcion != "*":
                                 # Continuar con el siguiente producto seleccionado
@@ -242,7 +242,7 @@ while not inicio_sesion_exitoso:
 
                     # Registrar la venta en el sistema
                     
-                    print("\nCompra registrada con exito!\n")
+                    print("Compra registrada con exito!\n")
 
                    # Continuar con el siguiente paso (solicitud de NIT/CI)
                     nit_ci_valido = False
@@ -256,10 +256,10 @@ while not inicio_sesion_exitoso:
                             nit_ci_valido = True
                         else:
                             os.system('cls' if os.name == 'nt' else 'clear')
-                            print("\nEl formato del NIT/CI no cumple con los requisitos, por favor revise sus datos.\n")
+                            print("El formato del NIT/CI no cumple con los requisitos, por favor revise sus datos.\n")
 
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nNIT/CI válido:", nit_ci)
+                    print("NIT/CI válido:", nit_ci, "\n")
 
                     # Solicitar nombre del beneficiario si no ingresó 0 en el NIT/CI
                     if nit_ci == "0":
@@ -267,29 +267,29 @@ while not inicio_sesion_exitoso:
                     else:
                         nombre_valido = False
                         while not nombre_valido:
-                            beneficiario = input("\nIngrese el nombre del beneficiario (solo letras): ")
+                            beneficiario = input("Ingrese el nombre del beneficiario (solo letras): ")
 
                             # Verificar que al menos una palabra contenga letras y cumpla con las demás condiciones
                             if any(word.isalpha() for word in beneficiario.split()) and all(word.isalpha() or word.isspace() for word in beneficiario) and len(beneficiario) <= 50:
                                 nombre_valido = True
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                print("\nEl nombre del beneficiario no cumple con los requisitos. Por favor, ingrese solo letras y no más de 50 caracteres.")
+                                print("El nombre del beneficiario no cumple con los requisitos. Por favor, ingrese solo letras y no más de 50 caracteres.\n")
 
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nNombre del beneficiario:", beneficiario)
+                    print("Nombre del beneficiario:", beneficiario, "\n")
 
 
                     # Solicitar método de pago (tarjeta o efectivo)
                     metodo_pago_valido = False
                     while not metodo_pago_valido:
                             
-                            metodo_pago = input("\nSeleccione el método de pago (Ponga 't' para tarjeta o 'e' para efectivo): ")
+                            metodo_pago = input("Seleccione el método de pago (Ponga 't' para tarjeta o 'e' para efectivo): ")
                             if metodo_pago.lower() == "t" or metodo_pago.lower() == "e":
                                 metodo_pago_valido = True
                             else:
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                print("\nOpción no válida. Por favor, ingrese la opcion correcta.")
+                                print("Opción no válida. Por favor, ingrese la opcion correcta.\n")
 
                     if metodo_pago.lower() == "e":
                         monto_pagado_valido = False
@@ -298,23 +298,23 @@ while not inicio_sesion_exitoso:
                             
                             try:
                                 
-                                print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
+                                print(f"Total de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
                                 if monto_pagado >= total_compra:
                                     monto_pagado_valido = True
                                     cambio = monto_pagado - total_compra
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("\nCambio a entregar al cliente:", cambio)
+                                    print("Cambio a entregar al cliente:", cambio, "\n")
                                 else:
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("\nMonto no válido. El monto pagado debe ser igual o mayor al total de la compra.")
+                                    print("Monto no válido. El monto pagado debe ser igual o mayor al total de la compra.\n")
                             except ValueError:
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                print("\nEntrada no válida. Por favor, ingrese un número válido.")
+                                print("Entrada no válida. Por favor, ingrese un número válido.\n")
 
                         # Generar comprobante
-                        print("\nGenerando comprobante...")
+                        print("Generando comprobante...")
                         time.sleep(1)
                         print("\n---------------------------------------------------------")
                         print("                        FAIR PLAY")
@@ -349,17 +349,17 @@ while not inicio_sesion_exitoso:
                             
                             try:
                                 
-                                print(f"\nTotal de la compra: Bs. {total_compra:.2f}")
+                                print(f"Total de la compra: Bs. {total_compra:.2f}")
                                 monto_pagado = float(input("\nIngrese el monto pagado por el cliente: "))
                                 
                                 if monto_pagado == total_compra:
                                     monto_pagado_valido = True
                                 else:
                                     os.system('cls' if os.name == 'nt' else 'clear')
-                                    print("\nMonto no válido. El monto pagado debe ser igual al total de la compra.")
+                                    print("Monto no válido. El monto pagado debe ser igual al total de la compra.\n")
                             except ValueError:
                                 os.system('cls' if os.name == 'nt' else 'clear')
-                                print("\nEntrada no válida. Por favor, ingrese un número válido.")
+                                print("Entrada no válida. Por favor, ingrese un número válido.\n")
 
                         # Generar comprobante
                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -391,7 +391,7 @@ while not inicio_sesion_exitoso:
                         contador_comprobantes += 1
                         
                 else:
-                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
+                    print("Opción inválida. Por favor, selecciona una opción válida de la lista de productos.\n")
 
                 input("\n\nPresione ENTER para registrar otra compra...\n")
 
@@ -409,12 +409,12 @@ while not inicio_sesion_exitoso:
                     procesar_venta(opcion_seleccionada)
                 else:
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nOpción inválida. Por favor, selecciona una opción válida de la lista de productos.")
+                    print("Opción inválida. Por favor, selecciona una opción válida de la lista de productos.")
 
                 # Cerrar la conexión a la base de datos al finalizar
                 if opcion_seleccionada == "*":
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
+                    print("Gracias por usar el sistema de ventas de Fair Play. Hasta pronto!\n")
                     
                     break
 
@@ -423,7 +423,7 @@ while not inicio_sesion_exitoso:
         registrar_usuario()
     elif opcion == "3":
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("\nGracias por usar el sistema de ventas de Fair Play. Hasta pronto!")
+        print("Gracias por usar el sistema de ventas de Fair Play. Hasta pronto!")
         
         break
     else:
