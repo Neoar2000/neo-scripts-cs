@@ -24,7 +24,7 @@ int main() {
         }
     }
 
-    printf("Inicio de sesion exitoso. Bienvenido, %s!\n", usr);
+    printf("\nInicio de sesion exitoso. Bienvenido, %s!\n", usr);
 
     return 0;
 }
