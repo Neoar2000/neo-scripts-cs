@@ -1,2 +1,2 @@
-# Jave Scripts
+# Java Scripts
 All Java scripts go here.
