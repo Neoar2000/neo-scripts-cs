@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <iostream>
 #include <locale>
 
 using namespace std;
@@ -160,7 +159,7 @@ void reporte(structFlota flotas[])
 {
     for (int i=0; i<9; i++ )
     {
-        cout << "FLORA NRO " << flotas[i].nroBus << endl;
+        cout << "FLOTA NRO " << flotas[i].nroBus << endl;
         cout << "\tTipo: " << flotas[i].tipoBus << endl;
         cout << "\tNro Asientos: " << flotas[i].nroAsientos << endl;
         cout << "\tNro pasajes vendidos mayores: " << flotas[i].mayores << endl;
