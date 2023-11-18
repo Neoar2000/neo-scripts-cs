@@ -22,34 +22,71 @@ struct structNotas
 void ingresarEstudiante()
 {
     structEstudiante estudiante;
-    
+
     system("cls");
     cout << "\tINGRESO DE DATOS ESTUDIANTE" << endl;
     cout << "==============================================" << endl;
     cout << "CI: ";
     cin >> estudiante.ci;
+
+    ifstream archivoLecturaEstudiantes("Estudiantes.bin", ios::binary);
+    if (archivoLecturaEstudiantes)
+    {
+        structEstudiante estudianteExistente;
+        while (archivoLecturaEstudiantes.read(reinterpret_cast<char*>(&estudianteExistente), sizeof(estudianteExistente)))
+        {
+            if (strcmp(estudiante.ci, estudianteExistente.ci) == 0)
+            {
+                system("cls");
+                cout << "Este CI ya esta registrado. Ingrese un CI diferente.\n" << endl;
+                system("pause");
+                return;
+            }
+        }
+        archivoLecturaEstudiantes.close();
+    }
+
     cout << "Nombres: ";
     cin.ignore();
     cin.getline(estudiante.nombres, sizeof(estudiante.nombres));
     cout << "Apellidos: ";
     cin.getline(estudiante.apellidos, sizeof(estudiante.apellidos));
 
-    ofstream archivoEstudiantes("Estudiantes.bin", ios::binary | ios::app);
-    archivoEstudiantes.write(reinterpret_cast<char*>(&estudiante), sizeof(estudiante));
-    archivoEstudiantes.close();
+    ofstream archivoEscrituraEstudiantes("Estudiantes.bin", ios::binary | ios::app);
+    archivoEscrituraEstudiantes.write(reinterpret_cast<char*>(&estudiante), sizeof(estudiante));
+    archivoEscrituraEstudiantes.close();
 
-    cout << "\nEstudiante ingresado correctamente." << endl;
+    system("cls");
+    cout << "Estudiante ingresado correctamente.\n" << endl;
+    system("pause");
 }
 
 void ingresarNotas()
 {
     structNotas notas;
-    
+
     system("cls");
     cout << "\t\tINGRESO DE NOTAS" << endl;
     cout << "==============================================" << endl;
     cout << "CI del estudiante: ";
     cin >> notas.ci;
+
+    ifstream archivoLecturaNotas("Notas.bin", ios::binary);
+    if (archivoLecturaNotas)
+    {
+        structNotas notaExistente;
+        while (archivoLecturaNotas.read(reinterpret_cast<char*>(&notaExistente), sizeof(notaExistente)))
+        {
+            if (strcmp(notas.ci, notaExistente.ci) == 0)
+            {
+                system("cls");
+                cout << "Este estudiante ya tiene una nota registrada. Ingrese un CI diferente.\n" << endl;
+                system("pause");
+                return;
+            }
+        }
+        archivoLecturaNotas.close();
+    }
 
     ifstream archivoEstudiantes("Estudiantes.bin", ios::binary);
     if (!archivoEstudiantes)
@@ -73,7 +110,8 @@ void ingresarNotas()
 
     if (!estudianteEncontrado)
     {
-        cout << "Estudiante no encontrado. Ingrese el estudiante primero." << endl;
+        system("cls");
+        cout << "Estudiante no encontrado. Ingrese el estudiante primero.\n" << endl;
         system("pause");
         return;
     }
@@ -90,7 +128,9 @@ void ingresarNotas()
     archivoNotas.write(reinterpret_cast<char*>(&notas), sizeof(notas));
     archivoNotas.close();
 
-    cout << "Notas ingresadas correctamente." << endl;
+    system("cls");
+    cout << "Notas ingresadas correctamente.\n" << endl;
+    system("pause");
 }
 
 void reporteEstudiantesNotas()
@@ -142,6 +182,7 @@ void reporteEstudiantesNotas()
 
     archivoNotas.close();
 
+    cout << "\n";
     system("pause");
 }
 
@@ -177,7 +218,9 @@ int main()
             cout << "Saliendo del sistema. Hasta luego!" << endl;
             break;
         default:
-            cout << "Opcion no valida. Por favor, ingrese una opcion valida." << endl;
+            system("cls");
+            cout << "Opcion no valida. Por favor, ingrese una opcion valida.\n" << endl;
+            system("pause");
             break;
         }
     } while (opcion != 4);
