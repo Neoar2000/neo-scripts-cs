@@ -2,6 +2,8 @@
 #include <fstream>
 #include <cstring>
 #include <cstdlib>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -216,6 +218,7 @@ int main()
         case 4:
             system("cls");
             cout << "Saliendo del sistema. Hasta luego!" << endl;
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         default:
             system("cls");
