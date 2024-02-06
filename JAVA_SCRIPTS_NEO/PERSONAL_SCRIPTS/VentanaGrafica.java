@@ -1,3 +1,4 @@
+package PERSONAL_SCRIPTS;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
