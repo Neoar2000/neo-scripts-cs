@@ -10,6 +10,7 @@ public class Clase_14Feb {
         for (int i = 0; i < a.length; i++) {
         System.out.println("Ingrese el valor de la posicion " + (i+1));
         a[i] = lector.nextInt();
+        lector.close();
         }
 
         for (int n:a){
