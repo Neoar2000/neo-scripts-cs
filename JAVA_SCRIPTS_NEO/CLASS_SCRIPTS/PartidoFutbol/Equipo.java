@@ -102,19 +102,19 @@ public class Equipo {
     // Método para añadir un jugador al equipo
     public void agregarJugador(Jugador jugador) {
         Scanner lector = new Scanner(System.in);
-        System.out.println("\tREGISTRO DE JUGADORES ");
+        System.out.println("    REGISTRO DE JUGADORES ");
         System.out.println("==============================");
-        System.out.println("Ingrese el nombre del jugador: ");
+        System.out.print("Ingrese el nombre del jugador: ");
         String nombre = lector.nextLine();
-        System.out.println("Ingrese la posición del jugador: ");
+        System.out.print("Ingrese la posición del jugador: ");
         String posicion = lector.nextLine();
-        System.out.println("Ingrese el número de casaca del jugador: ");
+        System.out.print("Ingrese el número de casaca del jugador: ");
         int nroCasaca = lector.nextInt();
-        System.out.println("Ingrese el día de nacimiento del jugador: ");
+        System.out.print("Ingrese el día de nacimiento del jugador: ");
         int dia = lector.nextInt();
-        System.out.println("Ingrese el mes de nacimiento del jugador: ");
+        System.out.print("Ingrese el mes de nacimiento del jugador: ");
         int mes = lector.nextInt();
-        System.out.println("Ingrese el año de nacimiento del jugador: ");
+        System.out.print("Ingrese el año de nacimiento del jugador: ");
         int anio = lector.nextInt();
         Jugador nuevoJugador = new Jugador();
         nuevoJugador.setJugador(nombre, posicion, nroCasaca, dia, mes, anio);
