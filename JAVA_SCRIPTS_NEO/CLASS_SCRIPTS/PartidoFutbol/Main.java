@@ -1,9 +1,6 @@
-import java.util.*;
-
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Equipo sistemas = new Equipo("Ing. de Sistemas", "Orlando Rivera");
 		Equipo mecatronica = new Equipo("Ing. Mecatronica","Fabio Diaz");
 		
@@ -39,11 +36,6 @@ public class Main {
 		System.out.println("--------------------------------------------");
 		sistemas.verJugadores();
 		mecatronica.verJugadores();
-		
-		
-		
-		
-
 	}
 
 }
