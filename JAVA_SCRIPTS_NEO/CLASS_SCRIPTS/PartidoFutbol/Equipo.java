@@ -1,129 +1,141 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
+//import java.time.LocalDate;
+/*apuntes: se puede tener un array list de objetos, 
+ el objeto se puede considerar un tipo de variable al declarar*/
 public class Equipo {
-    private ArrayList<Jugador> jugadores;
-    private String nombre;
-    private String carrera;
-    private Jugador capitan;
-    private int partidosJugados;
-    private int partidosGanados;
-    private int partidosPerdidos;
-    private int partidosEmpatados;
-    private int golesFavor;
-    private int golesContra;
+	private String carrera;
+	private ArrayList<Jugador> jugadores;
+	private String capitan;
+	//partidos
+	private int pJugados;
+	private int pGanados;
+	private int pPerdidos;
+	private int pEmpatados;
+	//goles
+	private int gFavor;
+	private int gContra;
+	public Equipo(String carrera, String capitan) {
+		this.carrera = carrera;
+		this.jugadores = new ArrayList<Jugador>();
+		this.capitan = capitan;
+		this.pJugados = 0;
+		this.pGanados = 0;
+		this.pPerdidos = 0;
+		this.pEmpatados = 0;
+		this.gFavor = 0;
+		this.gContra = 0;
+	}
+	//geters y seters
+	public String getCarrera() {
+		return carrera;
+	}
+	public void setCarrera(String carrera) {
+		this.carrera = carrera;
+	}
+	public void verJugadores() { //geter para ver jugadores
+		for (Jugador jugador : jugadores) {
+			System.out.println(jugador.toString());
+		}
+	}
+	
+	public String getCapitan() {
+		return capitan;
+	}
+	public void setCapitan(String capitan) {
+		this.capitan = capitan;
+	}
+	public int getpJugados() {
+		return pJugados;
+	}
+	public void setpJugados(int pJugados) { //
+		this.pJugados = pJugados;
+	}
+	public int getpGanados() {
+		return pGanados;
+	}
+	public void setpGanados(int pGanados) {
+		this.pGanados = pGanados;
+	}
+	public int getpPerdidos() {
+		return pPerdidos;
+	}
+	public void setpPerdidos(int pPerdidos) {
+		this.pPerdidos = pPerdidos;
+	}
+	public int getpEmpatados() {
+		return pEmpatados;
+	}
+	public void setpEmpatados(int pEmpatados) {
+		this.pEmpatados = pEmpatados;
+	}
+	public int getgFavor() {
+		return gFavor;
+	}
+	public void setgFavor(int gFavor) {
+		this.gFavor = gFavor;
+	}
+	public int getgContra() {
+		return gContra;
+	}
+	public void setgContra(int gContra) {
+		this.gContra = gContra;
+	}
+	
+	//metodos:
 
-    // Constructor
-    public Equipo(String nombre, String carrera) {
-        this.nombre = nombre;
-        this.carrera = carrera;
-        this.jugadores = new ArrayList<>();
-        this.partidosJugados = 0;
-        this.partidosGanados = 0;
-        this.partidosPerdidos = 0;
-        this.partidosEmpatados = 0;
-        this.golesFavor = 0;
-        this.golesContra = 0;
-    }
-
-    // Métodos setter y getter para cada atributo
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setCarrera(String carrera) {
-        this.carrera = carrera;
-    }
-
-    public String getCarrera() {
-        return carrera;
-    }
-
-    public void setCapitan(Jugador capitan) {
-        this.capitan = capitan;
-    }
-
-    public Jugador getCapitan() {
-        return capitan;
-    }
-
-    public void setPartidosJugados(int partidosJugados) {
-        this.partidosJugados = partidosJugados;
-    }
-
-    public int getPartidosJugados() {
-        return partidosJugados;
-    }
-
-    public void setPartidosGanados(int partidosGanados) {
-        this.partidosGanados = partidosGanados;
-    }
-
-    public int getPartidosGanados() {
-        return partidosGanados;
-    }
-
-    public void setPartidosPerdidos(int partidosPerdidos) {
-        this.partidosPerdidos = partidosPerdidos;
-    }
-
-    public int getPartidosPerdidos() {
-        return partidosPerdidos;
-    }
-
-    public void setPartidosEmpatados(int partidosEmpatados) {
-        this.partidosEmpatados = partidosEmpatados;
-    }
-
-    public int getPartidosEmpatados() {
-        return partidosEmpatados;
-    }
-
-    public void setGolesFavor(int golesFavor) {
-        this.golesFavor = golesFavor;
-    }
-
-    public int getGolesFavor() {
-        return golesFavor;
-    }
-
-    public void setGolesContra(int golesContra) {
-        this.golesContra = golesContra;
-    }
-
-    public int getGolesContra() {
-        return golesContra;
-    }
-
-    // Método para añadir un jugador al equipo
-    public void agregarJugador(Jugador jugador) {
-        Scanner lector = new Scanner(System.in);
-        System.out.println("    REGISTRO DE JUGADORES ");
-        System.out.println("==============================");
-        System.out.print("Ingrese el nombre del jugador: ");
-        String nombre = lector.nextLine();
-        System.out.print("Ingrese la posición del jugador: ");
-        String posicion = lector.nextLine();
-        System.out.print("Ingrese el número de casaca del jugador: ");
-        int nroCasaca = lector.nextInt();
-        System.out.print("Ingrese el día de nacimiento del jugador: ");
-        int dia = lector.nextInt();
-        System.out.print("Ingrese el mes de nacimiento del jugador: ");
-        int mes = lector.nextInt();
-        System.out.print("Ingrese el año de nacimiento del jugador: ");
-        int anio = lector.nextInt();
-        Jugador nuevoJugador = new Jugador();
-        nuevoJugador.setJugador(nombre, posicion, nroCasaca, dia, mes, anio);
-        jugadores.add(nuevoJugador);
-        lector.close();
-    }
-
-    // Método toString para mostrar la información del equipo
-    public String toString() {
-        return "Nombre del equipo: " + nombre + "\nCarrera: " + carrera + "\nCapitan: " + capitan.getNombre() + "\nPartidos jugados: " + partidosJugados + "\nPartidos ganados: " + partidosGanados + "\nPartidos perdidos: " + partidosPerdidos + "\nPartidos empatados: " + partidosEmpatados + "\nGoles a favor: " + golesFavor + "\nGoles en contra: " + golesContra;
-    }
+	public void agregarJugador() {
+		Scanner reader = new Scanner(System.in);
+		System.out.println("		Registro de jugador		");
+		System.out.println("ingrese el nombre del jugador");
+		String nom = reader.nextLine();
+		System.out.println("ingrese la posicion del jugador");
+		String pos = reader.nextLine();
+		System.out.println("ingrese el numero de camiseta del jugador");
+		int jer = reader.nextInt();
+		System.out.println("fecha de nacimiento");
+		System.out.println("ingrese el dia");
+		int d = reader.nextInt();
+		System.out.println("ingrese el mes");
+		int m = reader.nextInt();		
+		System.out.println("ingrese el anho");
+		int a = reader.nextInt();
+		this.jugadores.add(new Jugador (nom, pos, jer, d, m, a));
+	}
+	@Override
+	public String toString() {
+		return carrera + "\t"+ pJugados+ "\t" + pGanados + "\t" + pPerdidos + "\t" + pEmpatados
+				+ "\t" + gFavor + "\t" + gContra + "\t";
+	}
+	
+	public void incrementarGolesFavor() {
+		this.gFavor++;
+	}
+	
+	public void incrementarGolesContra() {
+		this.gContra++;
+	}
+	
+	public void incrementarPartidosJugados() {
+		this.pJugados++;
+	}
+	
+	public void incrementarPartidosGanados() {
+		this.pGanados++;
+	}
+	
+	public void incrementarPartidosEmpatados() {
+		this.pEmpatados++;
+	}
+	
+	public void incrementarPartidosPerdidos() {
+		this.pPerdidos++;
+	}
+	
+	public void setJugadores(ArrayList<Jugador> jugadores) {
+		this.jugadores = jugadores;
+	}
+	public ArrayList<Jugador> getJugadores() {
+		return jugadores;
+	}
 }

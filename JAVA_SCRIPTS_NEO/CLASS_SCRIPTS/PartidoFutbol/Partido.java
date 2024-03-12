@@ -1,96 +1,167 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Partido {
-    private String equipoLocal, equipoVisitante, cancha;
-    private int golesLocal, golesVisitante;
-    private LocalDate fecha;
-    private LocalTime horaInicio, horaFin;
+	private Equipo equipoLocal;
+	private Equipo equipoVisitante;
+	private int gLocal;
+	private int gVisitante;
+	private LocalDate fecha;
+	private LocalTime horaInicio;
+	private LocalTime horaFin;
+	
+	private String cancha; //posiblemente lo saquemos
 
-    public void setPartido(String equipoLocal, String equipoVisitante, int golesLocal, int golesVisitante, int dia, int mes, int anio, String cancha, int horaInicio, int minInicio, int horaFin, int minFin) {
-        this.equipoLocal = equipoLocal;
-        this.equipoVisitante = equipoVisitante;
-        this.golesLocal = golesLocal;
-        this.golesVisitante = golesVisitante;
-        this.fecha = LocalDate.of(anio, mes, dia);
-        this.cancha = cancha;
-        this.horaInicio = LocalTime.of(horaInicio, minInicio);
-        this.horaFin = LocalTime.of(horaFin, minFin);
-    }
+	public Partido(Equipo equipoLocal, Equipo equipoVisitante,
+			int d, int m, int a, String cancha) {
+		this.equipoLocal = equipoLocal;
+		this.equipoVisitante = equipoVisitante;
+		this.gLocal = 0;
+		this.gVisitante = 0;
+		this.fecha = LocalDate.of(a, m, d);
+		this.horaInicio = LocalTime.now();
+		this.horaFin = null;
+		this.cancha = cancha;
+	}
 
-    // Setters y Getters para equipoLocal
-    public void setEquipoLocal(String equipoLocal) {
-        this.equipoLocal = equipoLocal;
-    }
+	public Equipo getEquipoLocal() {
+		return equipoLocal;
+	}
 
-    public String getEquipoLocal() {
-        return equipoLocal;
-    }
+	public void setEquipoLocal(Equipo equipoLocal) {
+		this.equipoLocal = equipoLocal;
+	}
 
-    // Setters y Getters para equipoVisitante
-    public void setEquipoVisitante(String equipoVisitante) {
-        this.equipoVisitante = equipoVisitante;
-    }
+	public Equipo getEquipoVisitante() {
+		return equipoVisitante;
+	}
 
-    public String getEquipoVisitante() {
-        return equipoVisitante;
-    }
+	public void setEquipoVisitante(Equipo equipoVisitante) {
+		this.equipoVisitante = equipoVisitante;
+	}
 
-    // Setters y Getters para golesLocal
-    public void setGolesLocal(int golesLocal) {
-        this.golesLocal = golesLocal;
-    }
+	public int getgLocal() {
+		return gLocal;
+	}
 
-    public int getGolesLocal() {
-        return golesLocal;
-    }
+	public void setgLocal(int gLocal) {
+		this.gLocal = gLocal;
+	}
 
-    // Setters y Getters para golesVisitante
-    public void setGolesVisitante(int golesVisitante) {
-        this.golesVisitante = golesVisitante;
-    }
+	public int getgVisitante() {
+		return gVisitante;
+	}
 
-    public int getGolesVisitante() {
-        return golesVisitante;
-    }
+	public void setgContra(int gContra) {
+		this.gVisitante = gContra;
+	}
 
-    // Setters y Getters para fecha
-    public void setFecha(int dia, int mes, int anio) {
-        this.fecha = LocalDate.of(anio, mes, dia);
-    }
+	public LocalDate getFecha() {
+		return fecha;
+	}
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
 
-    // Setters y Getters para cancha
-    public void setCancha(String cancha) {
-        this.cancha = cancha;
-    }
+	public LocalTime getHoraInicio() {
+		return horaInicio;
+	}
 
-    public String getCancha() {
-        return cancha;
-    }
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
+	}
 
-    // Setters y Getters para horaInicio
-    public void setHoraInicio(int hora, int minuto) {
-        this.horaInicio = LocalTime.of(hora, minuto);
-    }
+	public LocalTime getHoraFin() {
+		return horaFin;
+	}
 
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
+	}
 
-    // Setters y Getters para horaFin
-    public void setHoraFin(int hora, int minuto) {
-        this.horaFin = LocalTime.of(hora, minuto);
-    }
+	public String getCancha() {
+		return cancha;
+	}
 
-    public LocalTime getHoraFin() {
-        return horaFin;
-    }
+	public void setCancha(String cancha) {
+		this.cancha = cancha;
+	}
 
-    public String toString() {
-        return "Equipo Local: " + equipoLocal + "\nEquipo Visitante: " + equipoVisitante + "\nGoles Local: " + golesLocal + "\nGoles Visitante: " + golesVisitante + "\nFecha: " + fecha + "\nCancha: " + cancha + "\nHora de Inicio: " + horaInicio + "\nHora de Fin: " + horaFin;
-    }
+	@Override
+	public String toString() {
+		return cancha +"\t" + equipoLocal.getCarrera() + "\t" + equipoVisitante.getCarrera() + 
+				"\t" + fecha + "\t" + horaInicio + "\t" + horaFin ;
+	}
+	
+	public void golLocal(int casaca) {
+		this.gLocal++;
+		this.equipoLocal.incrementarGolesFavor();
+		for (Jugador j:equipoLocal.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.IncrementarGoles();
+			}
+		}
+		this.equipoVisitante.incrementarGolesContra();
+	}
+	
+	public void golVisitante(int casaca) {
+		this.gVisitante++;
+		this.equipoVisitante.incrementarGolesFavor();
+		for (Jugador j:equipoVisitante.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.IncrementarGoles();
+			}
+		}
+		this.equipoLocal.incrementarGolesContra();
+	}
+	
+	public void amarillaLocal(int casaca) {
+		for (Jugador j:equipoLocal.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.IncrementarAmarillas();
+			}
+		}
+	}
+	
+	public void amarillaVisitante(int casaca) {
+		for (Jugador j:equipoVisitante.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.IncrementarAmarillas();
+			}
+		}
+	}
+	
+	public void rojaLocal(int casaca) {
+		for (Jugador j:equipoLocal.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.TarjetaRoja();
+			}
+		}
+	}
+	
+	public void rojaVisitante(int casaca) {
+		for (Jugador j:equipoVisitante.getJugadores()) {
+			if(j.getJersey()==casaca) {
+				j.TarjetaRoja();
+			}
+		}
+	}
+	
+	public void terminarPartido(){
+		this.equipoLocal.incrementarPartidosJugados();
+		this.equipoVisitante.incrementarPartidosJugados();
+		if(this.gLocal > this.gVisitante) {
+			this.equipoLocal.incrementarPartidosGanados();
+			this.equipoVisitante.incrementarPartidosPerdidos();
+		}else if(this.gLocal==this.gVisitante) {
+			this.equipoLocal.incrementarPartidosEmpatados();
+			this.equipoVisitante.incrementarPartidosEmpatados();
+		}else {
+			this.equipoLocal.incrementarPartidosPerdidos();
+			this.equipoVisitante.incrementarPartidosGanados();
+		}
+		this.horaFin = LocalTime.now();
+	}
 }
