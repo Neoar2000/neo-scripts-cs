@@ -59,7 +59,9 @@ public class Libro {
 
 	@Override
 	public String toString() {
-		return codigo + "\t" + titulo + "\t" + autor + "\t" + estado;
+		System.out.println("Código\tTítulo\t        Autor\t\tEstado");
+		System.out.println("-----------------------------------------------");
+		return codigo + "\t" + titulo + "\t" + autor + "\t" + estado + "\n";
 	}
 	
 	

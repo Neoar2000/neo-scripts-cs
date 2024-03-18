@@ -15,8 +15,9 @@ public class Persona {
 
 	@Override
 	public String toString() {
-		return  ci + "\t" + nombre + "\t" + telefono + "\t" + correo
-				+ "\t" + enMora;
+		System.out.println("CI\tNombre\t\tTeléfono\tCorreo\t\t        En mora?");
+		System.out.println("-------------------------------------------------------------------------");
+		return ci + "\t" + nombre + "\t" + telefono + "\t" + correo + "\t" + enMora + "\n";
 	}
 
 	public String getCi() {

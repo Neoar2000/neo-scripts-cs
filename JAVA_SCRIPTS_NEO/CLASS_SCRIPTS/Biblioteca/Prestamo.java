@@ -86,7 +86,7 @@ public class Prestamo {
 				estadoStr = "Estado desconocido";
 				break;
 		}
-		return "Préstamo de: " + libro.getTitulo() + " a " + persona.getNombre() + ", Estado: " + estadoStr;
+		return "Préstamo de: " + libro.getTitulo() + " a " + persona.getNombre() + ", Estado: " + estadoStr + "\n";
 	}
     
     public void verificarPrestamo(int d, int m, int a) {

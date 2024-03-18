@@ -17,18 +17,18 @@ public class Biblioteca {
     public void agregarLibro(int codigo, String titulo, String autor) {
 		Libro nuevoLibro = new Libro(codigo, titulo, autor);
 		libros.add(nuevoLibro);
-		System.out.println("Libro agregado exitosamente.");
+		System.out.println("\nLibro agregado exitosamente.\n");
 	}	
     
     public void agregarPersona(String ci, String nombre, String telefono, String correo) {
 		Persona nuevaPersona = new Persona(ci, nombre, telefono, correo);
 		personas.add(nuevaPersona);
-		System.out.println("Persona agregada exitosamente.");
+		System.out.println("\nPersona agregada exitosamente.\n");
 	}	
     
     public void agregarPrestamo(Prestamo prestamo) {
         prestamos.add(prestamo);
-        System.out.println("Préstamo registrado exitosamente.");
+        System.out.println("\nPréstamo registrado exitosamente.\n");
     }
     
     public Libro buscarLibro(int cod) {
@@ -62,7 +62,7 @@ public class Biblioteca {
     
     public void verificarPrestamos(int d, int m, int a) {
 		boolean hayMorosos = false;
-		System.out.println("Lista de morosos:");
+		System.out.println("Lista de morosos:\n");
 		for (Prestamo p : prestamos) {
 			p.verificarPrestamo(d, m, a);
 			if (p.getEstado() == 3) { // Si el préstamo está vencido (estado 3)
@@ -71,7 +71,7 @@ public class Biblioteca {
 			}
 		}
 		if (!hayMorosos) {
-			System.out.println("No hay morosos en la fecha especificada.");
+			System.out.println("No hay morosos en la fecha especificada.\n");
 		}
 	}	
 }

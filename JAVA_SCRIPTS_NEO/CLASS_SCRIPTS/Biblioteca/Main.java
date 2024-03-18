@@ -25,7 +25,7 @@ public class Main {
             
             switch (opcion) {
 				case 1:
-					System.out.println("Ingrese los datos del libro:");
+				 	System.out.println("\nIngrese los datos del libro:");
 					System.out.print("Código: ");
 					int codigoLibro = lector.nextInt();
 					lector.nextLine(); // Limpiar el buffer de entrada
@@ -33,11 +33,11 @@ public class Main {
 					String tituloLibro = lector.nextLine();
 					System.out.print("Autor: ");
 					String autorLibro = lector.nextLine();
-					
+
 					bib.agregarLibro(codigoLibro, tituloLibro, autorLibro);
 					break;
                 case 2:
-					System.out.println("Ingrese los datos de la persona:");
+					System.out.println("\nIngrese los datos de la persona:");
 					System.out.print("CI: ");
 					String ciPersona = lector.nextLine();
 					System.out.print("Nombre: ");
@@ -50,7 +50,7 @@ public class Main {
 					bib.agregarPersona(ciPersona, nombrePersona, telefonoPersona, correoPersona);
 					break;
                 case 3:
-                    System.out.println("Ingrese los datos del préstamo:");
+                    System.out.println("\nIngrese los datos del préstamo:");
                     System.out.print("Código del libro: ");
                     int codigoPrestamo = lector.nextInt();
                     lector.nextLine(); // Limpiar el buffer de entrada
@@ -63,31 +63,31 @@ public class Main {
                         Prestamo nuevoPrestamo = new Prestamo(personaPrestamo, libroPrestamo, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
                         bib.agregarPrestamo(nuevoPrestamo);
                     } else {
-                        System.out.println("El libro o la persona no existen.");
+                        System.out.println("\nEl libro o la persona no existen.\n");
                     }
                     break;
 				case 4:
-					System.out.println("Ingrese el código del libro a buscar:");
+					System.out.println("\nIngrese el código del libro a buscar:");
 					int codigoBuscar = lector.nextInt();
 					lector.nextLine(); // Limpiar el buffer de entrada
 					Libro libroEncontrado = bib.buscarLibro(codigoBuscar);
 					if (libroEncontrado != null) {
-						System.out.println("Libro encontrado:");
+						System.out.println("\nLibro encontrado:\n");
 						System.out.println(libroEncontrado);
 					} else {
-						System.out.println("El libro no se encuentra en la biblioteca.");
+						System.out.println("\nEl libro no se encuentra en la biblioteca.\n");
 					}
 					break;
 				case 5:
-					System.out.println("Ingrese la CI de la persona a buscar:");
+					System.out.println("\nIngrese la CI de la persona a buscar:");
 					String ciBusqueda = lector.nextLine();
 				
 					Persona personaEncontrada = bib.buscarPersona(ciBusqueda);
 					if (personaEncontrada != null) {
-						System.out.println("Persona encontrada:");
+						System.out.println("\nPersona encontrada:\n");
 						System.out.println(personaEncontrada);
 					} else {
-						System.out.println("La persona no fue encontrada.");
+						System.out.println("\nLa persona no fue encontrada.\n");
 					}
 					break;
 				case 6:
@@ -99,10 +99,10 @@ public class Main {
 				
 					Prestamo prestamoEncontrado = bib.buscarPrestamo(codigoPrestamoBusqueda, ciPrestamoBusqueda);
 					if (prestamoEncontrado != null) {
-						System.out.println("Préstamo encontrado:");
+						System.out.println("\nPréstamo encontrado:\n");
 						System.out.println(prestamoEncontrado);
 					} else {
-						System.out.println("El préstamo no fue encontrado.");
+						System.out.println("\nEl préstamo no fue encontrado.\n");
 					}
 					break;
 				case 7:
@@ -114,7 +114,7 @@ public class Main {
 					bib.verificarPrestamos(dia, mes, anio);
 					break;
                 case 0:
-                    System.out.println("Gracias por utilizar el sistema de la biblioteca. Hasta luego!");
+                    System.out.println("\nGracias por utilizar el sistema de la biblioteca UCB. Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, ingrese una opción válida.");
