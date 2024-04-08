@@ -1,4 +1,4 @@
-package PERSONAL_SCRIPTS;
+package JAVA_SCRIPTS_NEO.PERSONAL_SCRIPTS;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
