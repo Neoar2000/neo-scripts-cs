@@ -1,3 +1,4 @@
+package CLASS_SCRIPTS.RegistroProductos;
 import java.io.*;
 import java.util.ArrayList;
 

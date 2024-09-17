@@ -1,3 +1,4 @@
+package CLASS_SCRIPTS.RegistroProductos;
 import java.util.ArrayList;
 
 public class Main {

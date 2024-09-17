@@ -1,3 +1,4 @@
+package CLASS_SCRIPTS.RegistroProductos;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
